@@ -7,6 +7,6 @@ void swap(T&, T&);
 template<typename T>
 void print(const T& mas, int len);
 
-bool nextPerm(int (&P)[], int len);
+bool nextPerm(int *P, int len);
 
 #include "lib1.tpp"
