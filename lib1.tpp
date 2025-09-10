@@ -15,3 +15,10 @@ void print(const T& mas, int len){
         std::cout << mas[i] << " ";
     std::cout << std::endl;
 }
+
+
+template<typename T>
+T min(const T& a, const T& b){
+    return a < b ? a : b;
+}
+

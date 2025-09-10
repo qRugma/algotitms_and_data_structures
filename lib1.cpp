@@ -24,3 +24,15 @@ bool nextPerm(int *P, int len){
     }
     return false;
 }
+
+int** makeTwoDimMas(int n, int m){
+    int** mas = new int*[n];
+    for(int i=0; i<n; i++)
+        mas[i] = new int[m];
+    return mas;
+}
+
+int** makeTwoDimMas(int n){
+    return makeTwoDimMas(n, n);
+}
+
