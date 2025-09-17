@@ -14,7 +14,6 @@ bool nextPerm(int *P, int len){
     if (flag){
         return false;
     }
-
     for(; j>i; j--){
         if (P[i] < P[j]){
             swap(P[i], P[j]);
@@ -32,7 +31,21 @@ int** makeTwoDimMas(int n, int m){
     return mas;
 }
 
+void deleteTwoDimMas(int** mas, int n, int m){
+    for(int i=0; i<n; i++)
+        delete mas[i];
+    delete mas;
+}
+
 int** makeTwoDimMas(int n){
     return makeTwoDimMas(n, n);
 }
 
+FILE* FileOpen(const char *name, const char *flag){
+    FILE *f = fopen(name, flag);
+    if (f==NULL){
+        perror("error opening file");
+        exit(-1);
+    }
+    return f;
+}

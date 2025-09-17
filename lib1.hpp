@@ -1,4 +1,5 @@
 #pragma once
+#include <stdio.h>
 
 template<typename T>
 void swap(T&, T&);
@@ -10,6 +11,9 @@ void print(const T& mas, int len);
 template<typename T>
 T min(const T&, const T&);
 
+template<typename T>
+T max(const T& a, const T& b);
+
 // Запись следующей переставки, иначе возвращает false
 bool nextPerm(int *P, int len);
 
@@ -19,6 +23,8 @@ int** makeTwoDimMas(int n, int m);
 //Возрат квадратной матрицы NxN
 int** makeTwoDimMas(int n);
 
+void deleteTwoDimMas(int** mas, int n, int m);
 
+FILE* FileOpen(const char *name, const char *flag);
 
 #include "lib1.tpp"
