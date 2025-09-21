@@ -116,5 +116,5 @@ int main(){
     delete res0.way;
     delete res.way;
     delete res2.way;
-    deleteTwoDimMas(table, countCity, countCity);
+    deleteTwoDimMas(table, countCity);
 }

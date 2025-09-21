@@ -13,6 +13,6 @@ int** makeTwoDimMas(int n, int m);
 // Возрат квадратной матрицы NxN
 int** makeTwoDimMas(int n);
 
-void deleteTwoDimMas(int** mas, int n, int m);
+void deleteTwoDimMas(int** mas, int n);
 
 #include "lib1.tpp"
