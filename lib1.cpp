@@ -35,7 +35,7 @@ int** makeTwoDimMas(int n){
     return makeTwoDimMas(n, n);
 }
 
-void deleteTwoDimMas(int** mas, int n, int m){
+void deleteTwoDimMas(int** mas, int n){
     for(int i=0; i<n; i++)
         delete mas[i];
     delete mas;

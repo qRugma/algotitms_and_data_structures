@@ -1,30 +1,18 @@
 #pragma once
-#include <stdio.h>
 
-template<typename T>
-void swap(T&, T&);
-
-//Печать массива произвольной длины и типа
+// Печать массива произвольной длины и типа
 template<typename T>
 void print(const T& mas, int len);
 
-template<typename T>
-T min(const T&, const T&);
-
-template<typename T>
-T max(const T& a, const T& b);
-
 // Запись следующей переставки, иначе возвращает false
-bool nextPerm(int *P, int len);
+bool nextPerm(int* P, int len);
 
-//Возврат матрицы NxM
+// Возврат матрицы NxM
 int** makeTwoDimMas(int n, int m);
 
-//Возрат квадратной матрицы NxN
+// Возрат квадратной матрицы NxN
 int** makeTwoDimMas(int n);
 
 void deleteTwoDimMas(int** mas, int n, int m);
-
-FILE* FileOpen(const char *name, const char *flag);
 
 #include "lib1.tpp"
