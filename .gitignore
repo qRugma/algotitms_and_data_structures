@@ -44,5 +44,5 @@
 .vscode
 
 # sub files
-./template.cpp
+template.cpp
 testing
