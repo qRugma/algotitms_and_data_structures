@@ -2,7 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <random>
-#include <string.h>
+#include <cstring>
 
 struct Result{
     int distance = __INT_MAX__;
@@ -33,7 +33,7 @@ Result exactSol(int** table, int countCity, int startCity=1, bool MIN=1){
         // std::cout << res << " ";
         if ((MIN and (res < minRes.distance)) or (!MIN and (res > minRes.distance))){
             minRes.distance = res;
-            memcpy(minRes.way, P, (countCity+1) * sizeof(int));
+            std::memcpy(minRes.way, P, (countCity+1) * sizeof(int));
         }
         cont = nextPerm(P+1, lenP-2);
     }
@@ -57,7 +57,7 @@ Result heuristSol(int** table, int countCity){
         int minDis = __INT_MAX__;
         int minWay = -1;
         for(int k=1, j=J[1]; k<countCity; j=J[++k]){
-            if (j == -1 or table[way][j] == 0 or j == prevCity)
+            if (j == -1 or j == prevCity or table[way][j] == 0)
                 continue;
             if (table[way][j] < minDis){
                 minDis = table[way][j];
@@ -92,7 +92,6 @@ int main(){
                 table[i][j] = 0;
             else
                 table[i][j] = distribution(generator);
-        
         // print(table[i], countCity);
     }
 
