@@ -1,8 +1,8 @@
-#include "lib1.hpp"
-#include <iostream>
 #include <algorithm>
+#include <utility>
+#include "lib1.hpp"
 
-bool nextPerm(int *P, int len){
+bool nextPerm(int* P, int len){
     int i = len - 2, j = len - 1;
     bool flag = true;
     for(; i>=0; i--){
@@ -16,8 +16,8 @@ bool nextPerm(int *P, int len){
     }
     for(; j>i; j--){
         if (P[i] < P[j]){
-            swap(P[i], P[j]);
-            std::sort(&P[i+1], &P[len]);
+            std::swap(P[i], P[j]);
+            std::reverse(P+i+1, P+len);
             return true;
         }
     }
@@ -31,21 +31,12 @@ int** makeTwoDimMas(int n, int m){
     return mas;
 }
 
-void deleteTwoDimMas(int** mas, int n, int m){
-    for(int i=0; i<n; i++)
-        delete mas[i];
-    delete mas;
-}
-
 int** makeTwoDimMas(int n){
     return makeTwoDimMas(n, n);
 }
 
-FILE* FileOpen(const char *name, const char *flag){
-    FILE *f = fopen(name, flag);
-    if (f==NULL){
-        perror("error opening file");
-        exit(-1);
-    }
-    return f;
+void deleteTwoDimMas(int** mas, int n, int m){
+    for(int i=0; i<n; i++)
+        delete mas[i];
+    delete mas;
 }
