@@ -11,32 +11,30 @@ struct Result{
 
 
 Result exactSol(int** table, int countCity, int startCity=1, bool MIN=1){
-    int *P = new int[countCity+1];
+    int lenP = countCity + 1;
+    int *P = new int[lenP];
     for(int i=0; i<countCity; i++)
         P[i] = i;
     startCity -= 1;
     P[countCity] = startCity;
     P[0] = startCity;
     
-    int lenP = countCity + 1;
     bool cont = true;
     Result minRes;
-    minRes.way = new int[countCity+1];
+    minRes.way = new int[lenP];
     if (!MIN)
         minRes.distance = 0;
     while (cont){
         int res = 0;
         // print(P, lenP);
-        for(int i=0; i<lenP; i++){
+        for(int i=0; i<lenP-1; i++){
             res += table[P[i]][P[i+1]];
         }
         // std::cout << res << " ";
-        if (MIN)
-            minRes.distance = min(res, minRes.distance);
-        else 
-            minRes.distance = max(res, minRes.distance);
-            
-        memcpy(minRes.way, P, (countCity+1) * sizeof(int));
+        if ((MIN and (res < minRes.distance)) or (!MIN and (res > minRes.distance))){
+            minRes.distance = res;
+            memcpy(minRes.way, P, (countCity+1) * sizeof(int));
+        }
         cont = nextPerm(P+1, lenP-2);
     }
     delete P;
@@ -59,7 +57,7 @@ Result heuristSol(int** table, int countCity){
         int minDis = __INT_MAX__;
         int minWay = -1;
         for(int k=1, j=J[1]; k<countCity; j=J[++k]){
-            if (table[way][j] == 0 or j == -1 or j == prevCity)
+            if (j == -1 or table[way][j] == 0 or j == prevCity)
                 continue;
             if (table[way][j] < minDis){
                 minDis = table[way][j];
@@ -73,6 +71,7 @@ Result heuristSol(int** table, int countCity){
         way = minWay;
     }
     minRes.distance += table[way][0];
+    delete J;
     return minRes;
 }
 
@@ -115,6 +114,8 @@ int main(){
     std::cout << "эвристика= "<< res2.distance << std::endl;
     std::cout << "heurist duration= " << duration.count() << std::endl;
 
-    delete res.way, res2.way;
+    delete res0.way;
+    delete res.way;
+    delete res2.way;
     deleteTwoDimMas(table, countCity, countCity);
 }
