@@ -42,3 +42,7 @@
 
 # ide
 .vscode
+
+# sub files
+./template.cpp
+testing
