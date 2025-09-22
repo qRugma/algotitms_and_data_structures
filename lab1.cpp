@@ -26,14 +26,12 @@ Result exactSol(int** table, int countCity, int startCity=1, bool MIN=1){
         minRes.distance = 0;
     while (cont){
         int res = 0;
-        // print(P, lenP);
         for(int i=0; i<lenP-1; i++){
             res += table[P[i]][P[i+1]];
         }
-        // std::cout << res << " ";
         if ((MIN and (res < minRes.distance)) or (!MIN and (res > minRes.distance))){
             minRes.distance = res;
-            std::memcpy(minRes.way, P, (countCity+1) * sizeof(int));
+            std::memcpy(minRes.way, P, (lenP) * sizeof(int));
         }
         cont = nextPerm(P+1, lenP-2);
     }
@@ -107,7 +105,7 @@ int main(){
     timeEnd = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = timeEnd - timeStart;
     
-    std::cout << "лудший= "<< res.distance << std::endl;
+    std::cout << "лучший= "<< res.distance << std::endl;
     std::cout << "худший= "<< res0.distance << std::endl;
     std::cout << "exact duration= " << durationex.count() << std::endl;
     std::cout << "эвристика= "<< res2.distance << std::endl;
