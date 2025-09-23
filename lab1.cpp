@@ -21,7 +21,6 @@ Result exactSol(int** table, int countCity, int startCity=1, bool MIN=1){
     }
     P[countCity] = startCity;
     P[0] = startCity;
-    print(P, lenP);
     
     bool cont = true;
     Result minRes;
@@ -96,27 +95,27 @@ int main(){
                 table[i][j] = distribution(generator);
         // print(table[i], countCity);
     }
-
-    Result res0 = exactSol(table, countCity, startCity, false);
-    std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
-    Result res = exactSol(table, countCity, startCity);
-    std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> durationex = timeEnd - timeStart;
-    
-    
-    timeStart = std::chrono::high_resolution_clock::now();
-    Result res2 = heuristSol(table, countCity);
-    timeEnd = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = timeEnd - timeStart;
-    
-    std::cout << "лучший= "<< res.distance << std::endl;
-    std::cout << "худший= "<< res0.distance << std::endl;
-    std::cout << "exact duration= " << durationex.count() << std::endl;
-    std::cout << "эвристика= "<< res2.distance << std::endl;
-    std::cout << "heurist duration= " << duration.count() << std::endl;
-
-    delete res0.way;
-    delete res.way;
-    delete res2.way;
+    while(true){
+        Result res0 = exactSol(table, countCity, startCity, false);
+        std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
+        Result res = exactSol(table, countCity, startCity);
+        std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationex = timeEnd - timeStart;
+        
+        
+        timeStart = std::chrono::high_resolution_clock::now();
+        Result res2 = heuristSol(table, countCity);
+        timeEnd = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = timeEnd - timeStart;
+        
+        std::cout << "лучший= "<< res.distance << std::endl;
+        std::cout << "худший= "<< res0.distance << std::endl;
+        std::cout << "exact duration= " << durationex.count() << std::endl;
+        std::cout << "эвристика= "<< res2.distance << std::endl;
+        std::cout << "heurist duration= " << duration.count() << std::endl;
+        
+        std::cout << "start\n";
+        std::cin >> startCity;
+    }
     deleteTwoDimMas(table, countCity);
 }
