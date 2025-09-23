@@ -42,9 +42,12 @@ struct Result{
 Result exactSol(table_type table, int countCity, int startCity=1, bool MIN=true){
     int lenP = countCity + 1;
     std::vector<int> P(lenP);
-    for(int i=0; i<countCity; i++)
-        P[i] = i;
-    startCity -= 1;
+    for(int i=0; i<countCity; i++){
+        if (startCity < i)
+            P[i] = i;
+        else
+            P[i] = i-1;
+    }
     P[countCity] = startCity;
     P[0] = startCity;
     
@@ -118,29 +121,33 @@ int main(){
         // print(table[i], countCity);
     }
 
-    // Result res0 = exactSol(tablevec, countCity, startCity, false);
-    std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
-    Result res = exactSol(tablevec, countCity, startCity);
-    std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> durationex = timeEnd - timeStart;
-    
+    while (true){
+        // Result res0 = exactSol(tablevec, countCity, startCity, false);
+        std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
+        Result res = exactSol(tablevec, countCity, startCity);
+        std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationex = timeEnd - timeStart;
+        
 
-    timeStart = std::chrono::high_resolution_clock::now();
-    Result res2 = heuristSol(tablevec, countCity);
-    timeEnd = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> duration = timeEnd - timeStart;
-    // for(auto i : res.way){
-    //     std::cout << i << " ";
-    // }
-    // std::cout << std::endl;
-    // for(auto i : res2.way){
-    //     std::cout << i << " ";
-    // }
-    std::cout << std::endl;
-    std::cout << "лучший= "<< res.distance << std::endl;
-    // std::cout << "худший= "<< res0.distance << std::endl;
-    std::cout << "exact duration= " << durationex.count() << std::endl;
-    std::cout << "эвристика= "<< res2.distance << std::endl;
-    std::cout << "heurist duration= " << duration.count() << std::endl;
-    std::cout << (res2.distance < res.distance) << std::endl;
+        timeStart = std::chrono::high_resolution_clock::now();
+        Result res2 = heuristSol(tablevec, countCity);
+        timeEnd = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = timeEnd - timeStart;
+        // for(auto i : res.way){
+        //     std::cout << i << " ";
+        // }
+        // std::cout << std::endl;
+        // for(auto i : res2.way){
+        //     std::cout << i << " ";
+        // }
+        std::cout << std::endl;
+        std::cout << "лучший= "<< res.distance << std::endl;
+        // std::cout << "худший= "<< res0.distance << std::endl;
+        std::cout << "exact duration= " << durationex.count() << std::endl;
+        std::cout << "эвристика= "<< res2.distance << std::endl;
+        std::cout << "heurist duration= " << duration.count() << std::endl;
+        std::cout << (res2.distance < res.distance) << std::endl;
+        std::cout << "start\n";
+        std::cin >> startCity;
+    }
 }
