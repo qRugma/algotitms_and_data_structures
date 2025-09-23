@@ -13,11 +13,15 @@ struct Result{
 Result exactSol(int** table, int countCity, int startCity=1, bool MIN=1){
     int lenP = countCity + 1;
     int *P = new int[lenP];
-    for(int i=0; i<countCity; i++)
-        P[i] = i;
-    startCity -= 1;
+    for(int i=0; i<countCity; i++){
+        if (startCity < i)
+            P[i] = i;
+        else
+            P[i] = i-1;
+    }
     P[countCity] = startCity;
     P[0] = startCity;
+    print(P, lenP);
     
     bool cont = true;
     Result minRes;
@@ -78,8 +82,8 @@ int main(){
     std::random_device randomDevice;
     std::mt19937_64 generator(randomDevice());
     int rangeStart, rangeEnd, countCity, startCity = 1;
-    std::cout << "Rstart, Rend, count\n";
-    std::cin >> rangeStart >> rangeEnd >> countCity;
+    std::cout << "Rstart, Rend, count, start\n";
+    std::cin >> rangeStart >> rangeEnd >> countCity >> startCity;
     std::uniform_int_distribution<int> distribution(rangeStart, rangeEnd);
 
     int** table = makeTwoDimMas(countCity);
