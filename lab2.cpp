@@ -5,7 +5,7 @@
 #define string std::wstring
 
 
-int BM_search(string S, string P){
+int BM_search(string &S, string &P){
     int i, j, k, n=S.length(), m=P.length();
 
     std::vector<int> Alph(1200, m);
@@ -34,7 +34,7 @@ int BM_search(string S, string P){
     return i + 1 - m;
 }
 
-std::vector<int> findAll(int s, int e, string S, string P){
+std::vector<int> findAll(int s, int e, string &S, string &P){
     int i, j, k, m=P.length();
     std::vector<int> answer;
     std::vector<int> Alph(1200, m);
@@ -133,6 +133,12 @@ int main(){
         int s, e;
         std::wcin >> s >> e;    
         std::vector<int> answer = findAll(s, e, S, P);
+        for(auto i : answer)
+            std::wcout << i << L" ";
+        std::wcout << std::endl;
+    }
+    else if(choise == 3){
+        std::vector<int> answer = findAll(0, S.size(), S, P);
         for(auto i : answer)
             std::wcout << i << L" ";
         std::wcout << std::endl;
