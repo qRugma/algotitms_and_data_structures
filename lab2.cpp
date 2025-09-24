@@ -5,12 +5,6 @@
 #define string std::wstring
 
 
-struct Alphabete{
-
-};
-
-
-
 int BM_search(string S, string P){
     int i, j, k, n=S.length(), m=P.length();
 
@@ -78,7 +72,7 @@ void autoTest(){
     string S1 = L"во дворе трава на траве дрова";
     string P1 = L"дрова";
     string S = L"std::move_iterator is an iterator adaptor which behaves exactly like the underlying iterator";
-    string P = L"tor";    
+    string P = L"tor";
 
     int Ianswer = BM_search(S1, P1);
     std::wcout << Ianswer << std::endl;
