@@ -10,6 +10,8 @@ struct Result{
 };
 
 
+
+
 Result exactSol(int** table, int countCity, int startCity=1, bool MIN=1){
     int lenP = countCity + 1;
     int *P = new int[lenP];
@@ -85,7 +87,7 @@ int main(){
     std::cin >> rangeStart >> rangeEnd >> countCity >> startCity;
     std::uniform_int_distribution<int> distribution(rangeStart, rangeEnd);
 
-    int** table = makeTwoDimMas(countCity);
+    int** table = makeTwoDimMas<int>(countCity);
     
     for(int i=0; i < countCity; i++){
         for(int j=0; j<countCity; j++)

@@ -11,8 +11,10 @@ bool nextPerm(int* P, int len);
 int** makeTwoDimMas(int n, int m);
 
 // Возрат квадратной матрицы NxN
-int** makeTwoDimMas(int n);
+template<typename T>
+T** makeTwoDimMas(int n);
 
-void deleteTwoDimMas(int** mas, int n);
+template<typename T>
+void deleteTwoDimMas(T** mas, int n);
 
 #include "lib1.tpp"

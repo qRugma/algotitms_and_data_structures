@@ -24,18 +24,21 @@ bool nextPerm(int* P, int len){
     return false;
 }
 
-int** makeTwoDimMas(int n, int m){
-    int** mas = new int*[n];
+template<typename T>
+T** makeTwoDimMas(int n, int m){
+    T** mas = new T*[n];
     for(int i=0; i<n; i++)
-        mas[i] = new int[m];
+        mas[i] = new T[m];
     return mas;
 }
 
-int** makeTwoDimMas(int n){
-    return makeTwoDimMas(n, n);
+template<typename T>
+T** makeTwoDimMas(int n){
+    return makeTwoDimMas<T>(n, n);
 }
 
-void deleteTwoDimMas(int** mas, int n){
+template<typename T>
+void deleteTwoDimMas(T** mas, int n){
     for(int i=0; i<n; i++)
         delete mas[i];
     delete mas;

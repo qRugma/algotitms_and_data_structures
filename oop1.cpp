@@ -2,7 +2,8 @@
 #include <format>
 #include <cmath>
 #include <algorithm>
-
+#include <array>
+#include <oop1.hpp>
 
 class FreeVector{
 
@@ -10,9 +11,10 @@ class FreeVector{
     // Point end;
     // Point radius;
 
-    int start[3] = {0, 0, 0};
-    int end[3] = {0, 0, 0};
-    int radius[3] = {0, 0, 0};
+
+    std::array<double, 3> start = {0, 0, 0};
+    std::array<double, 3> end = {0, 0, 0};
+    std::array<double, 3> radius = {0, 0, 0};
     int dim = 3;
 
 
@@ -23,6 +25,7 @@ class FreeVector{
     }
 
     public:
+
     FreeVector(){}
 
     //first three is start point, next is end point
@@ -37,7 +40,9 @@ class FreeVector{
         end[2] = zE;
         calcRadius();
     }
-    FreeVector(int Start[3], int End[3]){
+
+    // size start and end need >= 3
+    FreeVector(int *Start, int *End){
         for(int i=0; i<dim; i++){
             start[i] = Start[i];
             end[i] = End[i];
@@ -47,16 +52,17 @@ class FreeVector{
     // FreeVector(const FreeVector&);
 
     // ~FreeVector(){}
-    void print(){
-        std::cout << "start:\t" << std::format(
-            "x={}, y={}, z={}", start[0], start[1], start[2]
-        ) << std::endl;
-        std::cout << "end:\t" << std::format(
-            "x={}, y={}, z={}", end[0], end[1], end[2]
-        ) << std::endl;
-        std::cout << "radius:\t" << std::format(
-            "x={}, y={}, z={}", radius[0], radius[1], radius[2]
-        ) << std::endl;
+
+    const double* getStart(){
+        return start.begin();
+    }
+
+    const double* getEnd(){
+        return end.begin();
+    }
+    
+    const double* getRadius(){
+        return radius.begin();
     }
 
     //first three is start point, next is end point
@@ -72,13 +78,41 @@ class FreeVector{
         calcRadius();
     }
 
-    void newCoors(int Start[3], int End[3]){
-        start[0] = Start[0];
-        start[1] = Start[1];
-        start[2] = Start[2];
-        end[0] = End[0];
-        end[1] = End[1];
-        end[2] = End[2];
+    void newStart(int xS, int yS, int zS)
+
+
+    void print(){
+        std::cout << "start:\t" << std::format(
+            "x={}, y={}, z={}", start[0], start[1], start[2]
+        ) << std::endl;
+        std::cout << "end:\t" << std::format(
+            "x={}, y={}, z={}", end[0], end[1], end[2]
+        ) << std::endl;
+        std::cout << "radius:\t" << std::format(
+            "x={}, y={}, z={}", radius[0], radius[1], radius[2]
+        ) << std::endl;
+    }
+
+    // size start need >= 3
+    void newStart(const int* Start){
+        for(int i=0; i<dim; i++)
+            start[i] = Start[i];
+        calcRadius();
+    }
+
+    // size end need >= 3
+    void newEnd(const int* End){
+        for(int i=0; i<dim; i++)
+            end[i] = End[i];
+        calcRadius();
+    }
+
+    // size start and end need >= 3
+    void newCoors(const int* Start, const int* End){
+        for(int i=0; i<dim; i++){
+            start[i] = Start[i];
+            end[i] = End[i];
+        }
         calcRadius();
     }
     
@@ -89,7 +123,16 @@ class FreeVector{
         return sqrt(sum);
     }
 
-    FreeVector operator+(const FreeVector& rhs) const{
+    FreeVector orthonormal(){
+        FreeVector tmp;
+        tmp.start = start;
+        double len = lenght();
+        for(int i=0; i<dim; i++)
+            tmp.end[i] = start[i] + (radius[i] / len);
+        calcRadius();
+    }
+
+    FreeVector operator+(const FreeVector &rhs) const{
         FreeVector tmp;
         
         for(int i=0; i<dim; i++){
@@ -101,7 +144,7 @@ class FreeVector{
         return tmp;
     }
 
-    FreeVector operator-(const FreeVector& rhs) const{
+    FreeVector operator-(const FreeVector &rhs) const{
         FreeVector tmp;
         
         
@@ -126,7 +169,7 @@ class FreeVector{
         return tmp;
     }
 
-    bool operator==(const FreeVector rhs) const{
+    bool operator==(const FreeVector &rhs) const{
         if(
             radius[0] == rhs.radius[0] and
             radius[1] == rhs.radius[1] and
@@ -135,16 +178,16 @@ class FreeVector{
         return false;
     }
 
-    double scalar(const FreeVector rhs) const{
+    double scalar(const FreeVector &rhs) const{
         double sum=0;
         for(int i=0; i<dim; i++)
             sum += radius[i] * rhs.radius[i];
         return sum / (lenght() * rhs.lenght());
     }
 
-    FreeVector VectorMultiplication(const FreeVector rhs) const{
+    FreeVector vectorProduct(const FreeVector &rhs) const{
         FreeVector tmp;
-        // need check for another dim
+        // dont work for another dim
         for(int i=0, l=1, r=dim-1; i<dim; i++, l++, r++, l%=dim, r%=dim){
             tmp.start[i] = start[i];
             tmp.end[i] = radius[l]*rhs.radius[r] - radius[r]*rhs.radius[l] + start[i];
@@ -152,16 +195,39 @@ class FreeVector{
         tmp.calcRadius();
         return tmp;
     }
+
+    double tripleProduct(const FreeVector &mhs, const FreeVector &rhs) const {
+        return scalar(mhs.vectorProduct(rhs));
+    }
+
+    FreeVector doubleVectorProduct(const FreeVector &mhs, const FreeVector &rhs) const {
+        return this->vectorProduct(mhs.vectorProduct(rhs));
+    }
+
 };
 
 int main(){
-    FreeVector vec{0, 1, 0, 1, 2, 3}, vec2{0, 2, 3, 0, -2, 6};
-    vec.print();
-    vec2.print();
+    FreeVector vec{0, 1, 0, 1, 2, 3}, vec2{0, 2, 3, 0, -2, 6}, vec3;
+    // vec.print();
+    // vec2.print();
+    // for(int i=0; i<3; i++)
+    //     vec.getRadius()[i] = 0;
+        
+    //геттеры
+    for(int i=0; i<3; i++)
+        std::cout << vec.getStart()[i];
+    std::cout << std::endl;
+    for(int i=0; i<3; i++)
+        std::cout << vec.getEnd()[i];
+    std::cout << std::endl;
+    for(int i=0; i<3; i++)
+        std::cout << vec.getRadius()[i];
+    std::cout << std::endl;
+
     std::cout << "lenght=" << vec.lenght() << std::endl;
     
     std::cout << "sum: " << std::endl;
-    FreeVector vec3 = vec + vec2;
+    vec3 = vec + vec2;
     vec3.print();
     
     std::cout << "subtraction: " << std::endl;
@@ -182,8 +248,11 @@ int main(){
 
     std::cout << "vector multiplication: " << std::endl;
 
-    vec3 = vec.VectorMultiplication(vec2);
+    vec3 = vec.vectorProduct(vec2);
     vec3.print();
 
-    std::cout << "";
+    std::cout << "tripleProduct: " << std::endl;
+    std::cout << vec.tripleProduct(vec2, vec3) << std::endl;
+    std::cout << vec.tripleProduct(vec3, vec2) << std::endl;
+
 }

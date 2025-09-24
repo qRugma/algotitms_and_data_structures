@@ -5,6 +5,8 @@
 #include <utility>
 #include <algorithm>
 #include <vector>
+#include <boost/pool/pool_alloc.hpp>
+
 
 // компилировать с флагом -O2 для g++
 // иначе вычисления дольше в 29 раз
@@ -110,7 +112,7 @@ int main(){
     table_type tablevec(countCity, std::vector<int>(countCity));
     std::uniform_int_distribution<int> distribution(rangeStart, rangeEnd);
 
-    
+    std::cout << tablevec[countCity][countCity] << std::endl;    
     for(int i=0; i < countCity; i++){
         for(int j=0; j<countCity; j++){
             if (i==j)
