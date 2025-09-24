@@ -34,7 +34,7 @@ int BM_search(string &S, string &P){
     return i + 1 - m;
 }
 
-std::vector<int> findAll(int s, int e, string &S, string &P){
+std::vector<int> findAll(int s, int e, const string &S, const string &P){
     int i, j, k, m=P.length();
     std::vector<int> answer;
     std::vector<int> Alph(1200, m);
