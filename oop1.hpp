@@ -1,3 +1,4 @@
+#include <array>
 class FreeVector{
     std::array<double, 3> start = {0, 0, 0};
     std::array<double, 3> end = {0, 0, 0};
