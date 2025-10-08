@@ -1,44 +1,19 @@
 class FreeVector{
-    double start[3] = {0, 0, 0};
-    double end[3] = {0, 0, 0};
-    double radius[3] = {0, 0, 0};
+    double x_, y_, z_;
     int dim = 3;
 
-    void calcRadius();
-
     public:
+    FreeVector(const double& x=0, const double& y=0, const double& z=0);
 
-    FreeVector(){}
+    void newCoors(const double& x=0, const double& y=0, const double& z=0);
 
-    //first three is start point, next is end point
-    FreeVector(double xS, double yS, double zS,
-               double xE, double yE, double zE);
-
-    // size start and end need >= 3
-    FreeVector(double *Start, double *End);
-
-
-    void newCoors(double *Start, double *End);
-
-    // size start need >= 3
-    void newStart(const double* Start);
-    void newStart(double xS, double yS, double zS);
-
-    // size end need >= 3
-    void newEnd(const double* End);
-    void newEnd(double xE, double yE, double zE);
-
-    // size start and end need >= 3
-    void newCoors(const double* Start, const double* End);
     
     friend std::ostream & operator << (std::ostream &cout, FreeVector vec);
     friend std::istream & operator >> (std::istream &cin, FreeVector vec);
 
-    const double* getStart();
-
-    const double* getEnd();
-    
-    const double* getRadius();
+    const double& getX();
+    const double& getY();
+    const double& getZ();
 
     double lenght() const;
 
