@@ -1,8 +1,6 @@
 #include <iostream>
-#include <format>
 #include <cmath>
 #include <algorithm>
-#include <array>
 #include "oop1.hpp"
 
 
@@ -35,15 +33,15 @@ FreeVector::FreeVector(double *Start, double *End){
 }
 
 const double* FreeVector::getStart(){
-    return start.begin();
+    return start;
 }
 
 const double* FreeVector::getEnd(){
-    return end.begin();
+    return end;
 }
 
 const double* FreeVector::getRadius(){
-    return radius.begin();
+    return radius;
 }
 
 //first three is start point, next is end point
@@ -67,17 +65,25 @@ void FreeVector::newEnd(double xE, double yE, double zE){
     end[2] = zE;
 }
 
+std::ostream & operator << (std::ostream &cout, FreeVector vec){
+    for(int i=0; i<vec.dim; i++){
+        cout << vec.start[i] << " ";
+    }
+    for(int i=0; i<vec.dim; i++){
+        cout << vec.end[i] << " ";
+    }
+    return cout;
+}
 
-void FreeVector::print(){
-    std::cout << "start:\t" << std::format(
-        "x={}, y={}, z={}", start[0], start[1], start[2]
-    ) << std::endl;
-    std::cout << "end:\t" << std::format(
-        "x={}, y={}, z={}", end[0], end[1], end[2]
-    ) << std::endl;
-    std::cout << "radius:\t" << std::format(
-        "x={}, y={}, z={}", radius[0], radius[1], radius[2]
-    ) << std::endl;
+
+std::istream & operator >> (std::istream &cin, FreeVector vec){
+    for(int i=0; i<vec.dim; i++){
+        cin >> vec.start[i];
+    }
+    for(int i=0; i<vec.dim; i++){
+        cin >> vec.end[i];
+    }
+    return cin;
 }
 
 // size start need >= 3
@@ -105,7 +111,7 @@ void FreeVector::newCoors(const double* Start, const double* End){
 }
 
 double FreeVector::lenght() const{
-    int sum = 0;
+    double sum = 0;
     for(int i=0; i<dim; i++)
         sum += pow(radius[i], 2);
     return sqrt(sum);
@@ -113,10 +119,11 @@ double FreeVector::lenght() const{
 
 FreeVector FreeVector::orthonormal(){
     FreeVector tmp;
-    tmp.start = start;
     double len = lenght();
-    for(int i=0; i<dim; i++)
+    for(int i=0; i<dim; i++){
+        tmp.start[i] = start[i];
         tmp.end[i] = start[i] + (radius[i] / len);
+    }
     tmp.calcRadius();
     return tmp;
 }
