@@ -1,10 +1,8 @@
-#include <array>
 class FreeVector{
-    std::array<double, 3> start = {0, 0, 0};
-    std::array<double, 3> end = {0, 0, 0};
-    std::array<double, 3> radius = {0, 0, 0};
+    double start[3] = {0, 0, 0};
+    double end[3] = {0, 0, 0};
+    double radius[3] = {0, 0, 0};
     int dim = 3;
-
 
     void calcRadius();
 
@@ -36,7 +34,8 @@ class FreeVector{
     // size start and end need >= 3
     void newCoors(const double* Start, const double* End);
     
-    void print();
+    friend std::ostream & operator << (std::ostream &cout, FreeVector vec);
+    friend std::istream & operator >> (std::istream &cin, FreeVector vec);
 
     const double* getStart();
 
