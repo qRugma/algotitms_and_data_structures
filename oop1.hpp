@@ -1,23 +1,26 @@
 class FreeVector{
     double x_, y_, z_;
-    int dim = 3;
 
     public:
-    FreeVector(const double& x=0, const double& y=0, const double& z=0);
+    FreeVector(double x=0, double y=0, double z=0);
 
-    void newCoors(const double& x=0, const double& y=0, const double& z=0);
+    void newCoors(double x=0, double y=0, double z=0);
 
     
-    friend std::ostream & operator << (std::ostream &cout, FreeVector vec);
-    friend std::istream & operator >> (std::istream &cin, FreeVector vec);
+    friend std::ostream & operator << (std::ostream &cout, const FreeVector &vec);
+    friend std::istream & operator >> (std::istream &cin, FreeVector &vec);
 
-    const double& getX();
-    const double& getY();
-    const double& getZ();
+    double getX() const;
+    double getY() const;
+    double getZ() const;
+    
+    void newX(double);
+    void newY(double);
+    void newZ(double);
 
     double lenght() const;
 
-    FreeVector orthonormal();
+    FreeVector orthonormal() const;
 
     FreeVector operator+(const FreeVector &rhs) const;
 
