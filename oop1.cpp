@@ -2,173 +2,76 @@
 #include <cmath>
 #include "oop1.hpp"
 
-
-void FreeVector::calcRadius(){
-        for(int i=0; i<dim; i++){
-        radius[i] = end[i] - start[i]; 
-        }
-    }
-
-    //first three is start point, next is end point
-FreeVector::FreeVector(double xS, double yS, double zS,
-                       double xE, double yE, double zE){
-    start[0] = xS;
-    start[1] = yS;
-    start[2] = zS;
-
-    end[0] = xE;
-    end[1] = yE;
-    end[2] = zE;
-    calcRadius();
+FreeVector::FreeVector(const double& x, const double& y, const double& z){
+    x_=x;
+    y_=y;
+    z_=z;
 }
 
-    // size start and end need >= 3
-FreeVector::FreeVector(double *Start, double *End){
-    for(int i=0; i<dim; i++){
-        start[i] = Start[i];
-        end[i] = End[i];
-    }
-    calcRadius();
+const double& FreeVector::getX(){
+    return x_;
 }
 
-const double* FreeVector::getStart(){
-    return start;
+const double& FreeVector::getY(){
+    return y_;
 }
 
-const double* FreeVector::getEnd(){
-    return end;
-}
-
-const double* FreeVector::getRadius(){
-    return radius;
+const double& FreeVector::getZ(){
+    return z_;
 }
 
 //first three is start point, next is end point
-void FreeVector::newCoors(double *Start, double *End){
-    for (int i=0; i<dim; i++){
-        start[i] = Start[i];
-        end[i] = End[i];
-    }
-    calcRadius();
-}
-
-void FreeVector::newStart(double xS, double yS, double zS){
-    start[0] = xS;
-    start[1] = yS;
-    start[2] = zS;
-}
-
-void FreeVector::newEnd(double xE, double yE, double zE){
-    end[0] = xE;
-    end[1] = yE;
-    end[2] = zE;
+void FreeVector::newCoors(const double& x, const double& y, const double& z){
+    x_=x;
+    y_=y;
+    z_=z;
 }
 
 std::ostream & operator << (std::ostream &cout, FreeVector vec){
-    for(int i=0; i<vec.dim; i++){
-        cout << vec.start[i] << " ";
-    }
-    for(int i=0; i<vec.dim; i++){
-        cout << vec.end[i] << " ";
-    }
+    cout << vec.x_ << " " << vec.y_ << " " << vec.z_;
     return cout;
 }
 
 
 std::istream & operator >> (std::istream &cin, FreeVector vec){
-    for(int i=0; i<vec.dim; i++){
-        cin >> vec.start[i];
-    }
-    for(int i=0; i<vec.dim; i++){
-        cin >> vec.end[i];
-    }
+    cin >> vec.x_ >> vec.y_ >> vec.z_;
     return cin;
 }
 
-// size start need >= 3
-void FreeVector::newStart(const double* Start){
-    for(int i=0; i<dim; i++){
-        start[i] = Start[i];
-    }
-    calcRadius();
-}
-
-// size end need >= 3
-void FreeVector::newEnd(const double* End){
-    for(int i=0; i<dim; i++)
-        end[i] = End[i];
-    calcRadius();
-}
-
-// size start and end need >= 3
-void FreeVector::newCoors(const double* Start, const double* End){
-    for(int i=0; i<dim; i++){
-        start[i] = Start[i];
-        end[i] = End[i];
-    }
-    calcRadius();
-}
-
 double FreeVector::lenght() const{
-    double sum = 0;
-    for(int i=0; i<dim; i++)
-        sum += pow(radius[i], 2);
-    return sqrt(sum);
+    return sqrt(pow(x_, 2) + pow(y_, 2) + pow(z_, 2));
 }
 
 FreeVector FreeVector::orthonormal(){
     FreeVector tmp;
     double len = lenght();
-    for(int i=0; i<dim; i++){
-        tmp.start[i] = start[i];
-        tmp.end[i] = start[i] + (radius[i] / len);
-    }
-    tmp.calcRadius();
+    tmp.x_ = x_ / len;
+    tmp.y_ = y_ / len;
+    tmp.z_ = z_ / len;
     return tmp;
 }
 
 FreeVector FreeVector::operator+(const FreeVector &rhs) const{
-    FreeVector tmp;
-    
-    for(int i=0; i<dim; i++){
-        tmp.start[i] = start[i];
-        tmp.end[i] = end[i] + rhs.radius[i];
-    }
-
-    tmp.calcRadius();
+    FreeVector tmp = {rhs.x_ + x_, rhs.z_ + y_, rhs.z_ + z_};
     return tmp;
 }
 
 FreeVector FreeVector::operator-(const FreeVector &rhs) const{
-    FreeVector tmp;
-    
-    
-    for(int i=0; i<dim; i++){
-        tmp.start[i] = start[i];
-        tmp.end[i] = end[i] - rhs.radius[i];
-    }
-
-
-    tmp.calcRadius();
+    FreeVector tmp = {rhs.x_ - x_, rhs.z_ - y_, rhs.z_ - z_};
     return tmp;
+
 }
 
 FreeVector FreeVector::operator*(const double num) const{
-    FreeVector tmp;
-
-    for(int i=0; i<dim; i++){
-        tmp.start[i] = start[i];
-        tmp.end[i] = start[i] + radius[i] * num;
-    }
-    tmp.calcRadius();
+    FreeVector tmp = {x_*num, y_*num, z_*num};
     return tmp;
 }
 
 bool FreeVector::operator==(const FreeVector &rhs) const{
     if(
-        radius[0] == rhs.radius[0] and
-        radius[1] == rhs.radius[1] and
-        radius[2] == rhs.radius[2]
+        x_ == rhs.x_ and
+        y_ == rhs.y_ and
+        z_ == rhs.z_
     ) return true;
     return false;
 }
@@ -179,20 +82,15 @@ bool FreeVector::operator!=(const FreeVector &rhs) const{
 
 
 double FreeVector::scalar(const FreeVector &rhs) const{
-    double sum=0;
-    for(int i=0; i<dim; i++)
-        sum += radius[i] * rhs.radius[i];
+    double sum = rhs.x_ * x_ + rhs.y_ * y_ + rhs.z_ * z_;
     return sum / (lenght() * rhs.lenght());
 }
 
 FreeVector FreeVector::vectorProduct(const FreeVector &rhs) const{
     FreeVector tmp;
-    // dont work for another dim
-    for(int i=0, l=1, r=dim-1; i<dim; i++, l++, r++, l%=dim, r%=dim){
-        tmp.start[i] = start[i];
-        tmp.end[i] = radius[l]*rhs.radius[r] - radius[r]*rhs.radius[l] + start[i];
-    }
-    tmp.calcRadius();
+    tmp.x_ = y_*rhs.z_ - z_*rhs.y_;
+    tmp.y_ = z_*rhs.x_ - x_*rhs.z_;
+    tmp.z_ = x_*rhs.y_ - y_*rhs.x_;
     return tmp;
 }
 
