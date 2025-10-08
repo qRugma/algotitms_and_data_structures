@@ -174,6 +174,11 @@ bool FreeVector::operator==(const FreeVector &rhs) const{
     return false;
 }
 
+bool FreeVector::operator!=(const FreeVector &rhs) const{
+    return !(*this == rhs);
+}
+
+
 double FreeVector::scalar(const FreeVector &rhs) const{
     double sum=0;
     for(int i=0; i<dim; i++)

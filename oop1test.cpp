@@ -40,6 +40,7 @@ void autotest(FreeVector vec, FreeVector vec2){
     std::cout << "equal: " << std::endl;
     std::cout << std::boolalpha;
     std::cout << "vec==vec: " << (vec == vec) << std::endl;
+    std::cout << "vec!=vec: " << (vec != vec) << std::endl;
     std::cout << "vec==vec2: " << (vec == vec2) << std::endl;
     std::cout << std::endl;
 

@@ -16,11 +16,8 @@ class FreeVector{
 
     // size start and end need >= 3
     FreeVector(double *Start, double *End);
-    // FreeVector(const FreeVector&);
 
 
-    //first three is start point, next is end point
-    // ~FreeVector(){}
     void newCoors(double *Start, double *End);
 
     // size start need >= 3
@@ -54,6 +51,7 @@ class FreeVector{
     FreeVector operator*(const double num) const;
 
     bool operator==(const FreeVector &rhs) const;
+    bool operator!=(const FreeVector &rhs) const;
     double scalar(const FreeVector &rhs) const;
     FreeVector vectorProduct(const FreeVector &rhs) const;
     double tripleProduct(const FreeVector &mhs, const FreeVector &rhs) const;
