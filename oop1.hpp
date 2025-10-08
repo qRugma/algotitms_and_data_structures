@@ -23,10 +23,13 @@ class FreeVector{
     FreeVector orthonormal() const;
 
     FreeVector operator+(const FreeVector &rhs) const;
+    FreeVector operator+=(const FreeVector &rhs) const;
 
     FreeVector operator-(const FreeVector &rhs) const;
+    FreeVector operator-=(const FreeVector &rhs) const;
 
     FreeVector operator*(const double num) const;
+    FreeVector operator*=(const double num) const;
 
     bool operator==(const FreeVector &rhs) const;
     bool operator!=(const FreeVector &rhs) const;

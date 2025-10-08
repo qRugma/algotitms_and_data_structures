@@ -65,16 +65,29 @@ FreeVector FreeVector::operator+(const FreeVector &rhs) const{
     return tmp;
 }
 
+FreeVector FreeVector::operator+=(const FreeVector &rhs) const{
+    return *this + rhs;
+}
+
 FreeVector FreeVector::operator-(const FreeVector &rhs) const{
     FreeVector tmp = {rhs.x_ - x_, rhs.y_ - y_, rhs.z_ - z_};
     return tmp;
-
 }
+
+FreeVector FreeVector::operator-=(const FreeVector &rhs) const{
+    return *this - rhs;
+}
+
 
 FreeVector FreeVector::operator*(const double num) const{
     FreeVector tmp = {x_*num, y_*num, z_*num};
     return tmp;
 }
+
+FreeVector FreeVector::operator*=(const double num) const{
+    return *this * num;
+}
+
 
 bool FreeVector::operator==(const FreeVector &rhs) const{
     if(
