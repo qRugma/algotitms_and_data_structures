@@ -61,8 +61,9 @@ int main(){
     std::cout << std::endl;
     if (choise == 0)
         autotest(vec, vec2);
-    if (choise == 1)
+    else if (choise == 1){
         std::cin >> vec >> vec2;
         autotest(vec, vec2);
-    
+    }
+        
 }
