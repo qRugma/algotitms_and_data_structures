@@ -2,38 +2,47 @@
 #include <cmath>
 #include "oop1.hpp"
 
-FreeVector::FreeVector(const double& x, const double& y, const double& z){
+FreeVector::FreeVector(double x, double y, double z){
     x_=x;
     y_=y;
     z_=z;
 }
 
-const double& FreeVector::getX(){
+double FreeVector::getX() const{
     return x_;
 }
 
-const double& FreeVector::getY(){
+double FreeVector::getY() const{
     return y_;
 }
 
-const double& FreeVector::getZ(){
+double FreeVector::getZ() const{
     return z_;
 }
 
-//first three is start point, next is end point
-void FreeVector::newCoors(const double& x, const double& y, const double& z){
+void FreeVector::newX(double x){
+    x_ = x;
+}
+void FreeVector::newY(double y){
+    y_ = y;
+}
+void FreeVector::newZ(double z){
+    z_ = z;
+}
+
+void FreeVector::newCoors(double x, double y, double z){
     x_=x;
     y_=y;
     z_=z;
 }
 
-std::ostream & operator << (std::ostream &cout, FreeVector vec){
+std::ostream & operator << (std::ostream &cout, const FreeVector &vec){
     cout << vec.x_ << " " << vec.y_ << " " << vec.z_;
     return cout;
 }
 
 
-std::istream & operator >> (std::istream &cin, FreeVector vec){
+std::istream & operator >> (std::istream &cin, FreeVector &vec){
     cin >> vec.x_ >> vec.y_ >> vec.z_;
     return cin;
 }
@@ -42,7 +51,7 @@ double FreeVector::lenght() const{
     return sqrt(pow(x_, 2) + pow(y_, 2) + pow(z_, 2));
 }
 
-FreeVector FreeVector::orthonormal(){
+FreeVector FreeVector::orthonormal() const{
     FreeVector tmp;
     double len = lenght();
     tmp.x_ = x_ / len;
@@ -52,12 +61,12 @@ FreeVector FreeVector::orthonormal(){
 }
 
 FreeVector FreeVector::operator+(const FreeVector &rhs) const{
-    FreeVector tmp = {rhs.x_ + x_, rhs.z_ + y_, rhs.z_ + z_};
+    FreeVector tmp = {rhs.x_ + x_, rhs.y_ + y_, rhs.z_ + z_};
     return tmp;
 }
 
 FreeVector FreeVector::operator-(const FreeVector &rhs) const{
-    FreeVector tmp = {rhs.x_ - x_, rhs.z_ - y_, rhs.z_ - z_};
+    FreeVector tmp = {rhs.x_ - x_, rhs.y_ - y_, rhs.z_ - z_};
     return tmp;
 
 }
@@ -82,8 +91,7 @@ bool FreeVector::operator!=(const FreeVector &rhs) const{
 
 
 double FreeVector::scalar(const FreeVector &rhs) const{
-    double sum = rhs.x_ * x_ + rhs.y_ * y_ + rhs.z_ * z_;
-    return sum / (lenght() * rhs.lenght());
+    return rhs.x_ * x_ + rhs.y_ * y_ + rhs.z_ * z_;
 }
 
 FreeVector FreeVector::vectorProduct(const FreeVector &rhs) const{
