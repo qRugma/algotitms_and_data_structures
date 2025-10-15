@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include <random>
 #include <chrono>
 
@@ -62,16 +63,20 @@ int main(){
                 fout << (mas[i] = distribution(generator)) << " ";
             fout.close();
             double sumdur = 0;
+            int *itermas = new int[size];
             for(int i = 0; i<3; i++){
+                std::memcpy(itermas, mas, size*sizeof(int));
                 std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
-                PiramSort(mas, size);
+                PiramSort(itermas, size);
                 std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double> duration = timeEnd - timeStart;
                 sumdur += duration.count();
+                
             }
                 
-            std::cout << size << "\t\t" << d << "\t" << is_sorted(mas, mas+size) << "\t\t" << (sumdur / 3) << std::endl;
+            std::cout << size << "\t\t" << d << "\t" << is_sorted(itermas, itermas+size) << "\t\t" << (sumdur / 3) << std::endl;
 
             delete[] mas;
+            delete[] itermas;
         }
 }
