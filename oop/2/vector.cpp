@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstring>
-#include <algorithm>
 #include <cassert>
 
+#include "sort.cpp"
 #include "vector.hpp"
 
 Vector::Vector(const int capacity){
@@ -96,11 +96,8 @@ std::istream & operator >> (std::istream &cin, Vector &vec){
     return cin;
 }
 
-void Vector::sort(bool reverse){
-    if (reverse)
-        std::sort(data_, &data_[size_], std::greater<>());
-    else
-        std::sort(data_, &data_[size_]);
+void Vector::sort(){
+    PiramSort(data_, size_);
 }
 
 bool Vector::insert(const int index, const int value){
@@ -152,7 +149,7 @@ bool Vector::remove_all(const int value){
 
 int Vector::max() const{
     int max=0;
-    assert(size_ == 0);
+    assert(size_ != 0);
     max = data_[0];
     for(size_t i=1; i<size_; i++)
         max = max < data_[i]? data_[i] : max;
@@ -161,7 +158,7 @@ int Vector::max() const{
 
 int Vector::min() const{
     int min=0;
-    assert(size_ == 0);
+    assert(size_ != 0);
     min = data_[0];
     for(size_t i=1; i<size_; i++)
         min = min > data_[i]? data_[i] : min;
@@ -185,12 +182,12 @@ const int* Vector::end() const{
 }
 
 const int& Vector::operator[](int index) const{
-    assert(index < 0); assert(size_ < index);
+    assert(index >= 0); assert(size_ > index);
     return data_[index];
 }
 
 int& Vector::operator[](int index){
-    assert(index < 0); assert(size_ < index);
+    assert(index >= 0); assert(size_ > index);
     return data_[index];
 }
 
