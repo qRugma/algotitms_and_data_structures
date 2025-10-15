@@ -1,10 +1,8 @@
 #include <iostream>
 #include <cstring>
-#include <algorithm>
 #include <cassert>
 #include <initializer_list>
 #include "sort.cpp"
-
 
 template<typename T>
 class Vector {
@@ -24,13 +22,11 @@ class Vector {
 
     ~Vector();
     
-    void resize(int size);
-    void resize(int size, int value);
     int size() const;
 
     void swap(Vector &other);
 
-    size_t find(T& elem) const;
+    int find(T& elem) const;
 
     template<typename I>
     friend std::ostream & operator << (std::ostream &cout, const Vector<I> &vec);
@@ -43,8 +39,8 @@ class Vector {
     T pop(const size_t index);
     bool remove(const T &value);
     bool remove_all(const T &value);
-    const T max() const;
-    const T min() const;
+    T max() const;
+    T min() const;
 
     T* begin();
     T* end();
@@ -71,14 +67,12 @@ Vector<T>::Vector(const int capacity){
     data_ = new T[capacity_];
 }
 
-
 template<typename T>
 Vector<T>::Vector(T *mas, int len){
     capacity_ = size_ = len;
     data_ = new T[capacity_];
     std::memcpy(data_, mas, size_*sizeof(T));
 }
-
 
 template<typename T>
 Vector<T>::Vector(const std::initializer_list<T>& l){
@@ -88,8 +82,6 @@ Vector<T>::Vector(const std::initializer_list<T>& l){
     for(auto i = l.begin(); i != l.end(); i++)
         data_[j++] = *i;
 }
-
-
 
 template<typename T>
 Vector<T>::Vector(Vector<T> &&vec){
@@ -103,24 +95,6 @@ template<typename T>
 Vector<T>::~Vector(){
     delete[] data_;
 }
-
-// template<typename T>
-// void Vector<T>::resize(int size){
-//     if (capacity_ < size){
-//         capacity_ = size;
-//         T *data = new T[capacity_];
-//         std::memcpy(data, data_, size_);
-//         delete[] data_;
-//         data_ = data;
-//     }
-//     else if (capacity_ > size){
-//         capacity_ = size;
-//         T *data = new T[capacity_];
-//         std::memcpy(data, data_, size_);
-//         delete[] data_;
-//         data_ = data;
-//     }
-// }
 
 template<typename T>
 int Vector<T>::size() const{
@@ -141,7 +115,7 @@ void Vector<T>::swap(Vector<T> &other){
 }
 
 template<typename T>
-size_t Vector<T>::find(T& elem) const{
+int Vector<T>::find(T& elem) const{
     for(size_t i=0; i<size_; i++)
         if (data_[i] == elem)
             return i;
@@ -214,12 +188,12 @@ bool Vector<T>::remove_all(const T &value){
         if (data_[i] == value)
             shift++;
     }
-    size_= shift;
+    size_-= shift;
     return shift;
 }
 
 template<typename T>
-const T Vector<T>::max() const{
+T Vector<T>::max() const{
     int max=0;
     assert(size_ != 0);
     max = data_[0];
@@ -229,7 +203,7 @@ const T Vector<T>::max() const{
 }
 
 template<typename T>
-const T Vector<T>::min() const{
+T Vector<T>::min() const{
     int min=0;
     assert(size_ != 0);
     min = data_[0];

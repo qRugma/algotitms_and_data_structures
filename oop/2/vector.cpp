@@ -10,11 +10,18 @@ Vector::Vector(const int capacity){
     data_ = new int[capacity_];
 }
 
-
 Vector::Vector(int* mas, int len){
     capacity_ = size_ = len;
     data_ = new int[capacity_];
     std::memcpy(data_, mas, size_*sizeof(int));
+}
+
+Vector::Vector(const std::initializer_list<int>& l){
+    size_ = capacity_ = l.size();
+    data_ = new int[capacity_];
+    int j = 0;
+    for(auto i = l.begin(); i != l.end(); i++)
+        data_[j++] = *i;
 }
 
 Vector::Vector(Vector &&vec){
@@ -24,48 +31,11 @@ Vector::Vector(Vector &&vec){
     vec.data_ = nullptr;
 }
 
-void Vector::resize(int size){
-    if (capacity_ < size){
-        capacity_ = size;
-        int *data = new int[capacity_];
-        std::memcpy(data, data_, size_);
-        delete[] data_;
-        data_ = data;
-    }
-    else if (capacity_ > size){
-        capacity_ = size;
-        int *data = new int[capacity_];
-        std::memcpy(data, data_, size_);
-        delete[] data_;
-        data_ = data;
-    }
-}
-
-void Vector::resize(int size, int value){
-    if (capacity_ < size){
-        capacity_ = size;
-        int *data = new int[capacity_];
-        std::memcpy(data, data_, size_);
-        for(int i=size_; i < capacity_; i++)
-            data[i] = value;
-        size_ = capacity_;
-        delete[] data_;
-        data_ = data;
-    }
-    else if (capacity_ > size){
-        capacity_ = size;
-        int *data = new int[capacity_];
-        std::memcpy(data, data_, size_);
-        delete[] data_;
-        data_ = data;
-    }
-}
-
 int Vector::size() const{
     return size_;
 }
 
-void Vector::swap(Vector other){
+void Vector::swap(Vector &other){
     int size = other.size_;
     int capacity = other.capacity_;
     int *data = other.data_;
@@ -143,7 +113,7 @@ bool Vector::remove_all(const int value){
         if (data_[i] == value)
             shift++;
     }
-    size_= shift;
+    size_ -= shift;
     return shift;
 }
 
@@ -201,6 +171,7 @@ Vector& Vector::operator=(const Vector &other){
     std::memcpy(data_, other.data_, size_*sizeof(int));
     return *this;
 }
+
 Vector Vector::operator+(int value) const{
     Vector tmp(size_ + 1);
     std::memcpy(tmp.data_, data_, size_*sizeof(int));
@@ -208,6 +179,7 @@ Vector Vector::operator+(int value) const{
     tmp.data_[size_] = value;
     return tmp;
 }
+
 Vector& Vector::operator+=(int value){
     if (size_ == capacity_){
         int* data = new int[capacity_ + 10];
@@ -218,6 +190,7 @@ Vector& Vector::operator+=(int value){
     data_[size_++] = value;
     return *this;
 }
+
 Vector& Vector::operator=(Vector &&other){
     if(this != &other){
         delete[] data_;
@@ -228,6 +201,7 @@ Vector& Vector::operator=(Vector &&other){
     }
     return *this;
 }
+
 Vector Vector::operator+(const Vector &other) const{
     Vector tmp(size_ + other.size_);
     tmp.size_ = size_ + other.size_;
@@ -235,6 +209,7 @@ Vector Vector::operator+(const Vector &other) const{
     std::memcpy(&tmp.data_[size_], other.data_, other.size_*sizeof(int));
     return tmp;
 }
+
 Vector& Vector::operator+=(const Vector &other){
     if (capacity_ < size_ + other.size_){
         capacity_ = size_ + other.size_;
@@ -244,8 +219,10 @@ Vector& Vector::operator+=(const Vector &other){
         data_ = data;
     }
     std::memcpy(&data_[size_], other.data_, other.size_*sizeof(int));
+    size_ += other.size_;
     return *this;
 }
+
 bool Vector::operator==(const Vector &other) const{
     if (size_ != other.size_)
         return false;
@@ -255,6 +232,7 @@ bool Vector::operator==(const Vector &other) const{
     }
     return true;
 }
+
 bool Vector::operator!=(const Vector &other) const{
     return !(*this == other);
 }

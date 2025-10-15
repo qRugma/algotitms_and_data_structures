@@ -9,13 +9,13 @@ class Vector {
     
     Vector(int* mas, int len);
     
+    Vector(const std::initializer_list<int>&);
+    
     Vector(Vector &&vec);
     
-    void resize(int size);
-    void resize(int size, int value);
     int size() const;
 
-    void swap(Vector other);
+    void swap(Vector &other);
 
     int find(int elem) const;
 
