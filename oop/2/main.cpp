@@ -15,9 +15,9 @@ int main(){
     std::cout << "0 - auto, 1 - write\n";
     std::cin >> choise;
     if (choise){
-        std::cout << "write 5 elements: ";
+        std::cout << "write 5 elements for vec: ";
         std::cin >> vec;
-        std::cout << "\nwrite 3 elements: ";
+        std::cout << "\nwrite 3 elements for vec2: ";
         std::cin >> vec2;
     }
     std::cout << "vec.size: ";
@@ -34,6 +34,7 @@ int main(){
     vec.pop(3);
     std::cout << vec << std::endl;
     
+    std::cout << "vecs:\n"<< vecs << std::endl;
     std::cout << "vecs.remove(value: 3)\n";
     vecs.remove(3);
     std::cout << vecs << std::endl;
