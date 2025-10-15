@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cassert>
 #include <initializer_list>
+#include "sort.cpp"
+
 
 template<typename T>
 class Vector {
@@ -35,14 +37,14 @@ class Vector {
     template<typename I>
     friend std::istream & operator >> (std::istream &cin, Vector<I> &vec);
 
-    void sort(bool reverse=false);
+    void sort();
 
     bool insert(const size_t index, const T& value);
     T pop(const size_t index);
     bool remove(const T &value);
     bool remove_all(const T &value);
-    const T& max() const;
-    const T& min() const;
+    const T max() const;
+    const T min() const;
 
     T* begin();
     T* end();
@@ -80,7 +82,6 @@ Vector<T>::Vector(T *mas, int len){
 
 template<typename T>
 Vector<T>::Vector(const std::initializer_list<T>& l){
-    std::cout << "initializer list\n";
     size_ = capacity_ = l.size();
     data_ = new T[capacity_];
     int j = 0;
@@ -162,11 +163,8 @@ std::istream & operator >> (std::istream &cin, Vector<T> &vec){
 }
 
 template<typename T>
-void Vector<T>::sort(bool reverse){
-    if (reverse)
-        std::sort(data_, &data_[size_], std::greater<>());
-    else
-        std::sort(data_, &data_[size_]);
+void Vector<T>::sort(){
+    PiramSort(data_, size_);
 }
 
 template<typename T>
@@ -189,7 +187,7 @@ bool Vector<T>::insert(const size_t index, const T &value){
 
 template<typename T>
 T Vector<T>::pop(const size_t index){
-    assert((index < 0) or (size_ < index));
+    assert(index >= 0); assert(size_ > index);
     T poped = data_[index];
     std::memmove(&data_[index], &data_[index+1], (size_ - index)*sizeof(T));
     size_--;
@@ -221,9 +219,9 @@ bool Vector<T>::remove_all(const T &value){
 }
 
 template<typename T>
-const T& Vector<T>::max() const{
+const T Vector<T>::max() const{
     int max=0;
-    assert(size_ == 0);
+    assert(size_ != 0);
     max = data_[0];
     for(size_t i=1; i<size_; i++)
         max = max < data_[i]? data_[i] : max;
@@ -231,9 +229,9 @@ const T& Vector<T>::max() const{
 }
 
 template<typename T>
-const T& Vector<T>::min() const{
+const T Vector<T>::min() const{
     int min=0;
-    assert(size_ == 0);
+    assert(size_ != 0);
     min = data_[0];
     for(size_t i=1; i<size_; i++)
         min = min > data_[i]? data_[i] : min;
@@ -262,13 +260,13 @@ const T* Vector<T>::end() const{
 
 template<typename T>
 const T& Vector<T>::operator[](int index) const{
-    assert(index < 0); assert(size_ < index);
+    assert(index >= 0); assert(size_ > index);
     return data_[index];
 }
 
 template<typename T>
 T& Vector<T>::operator[](int index){
-    assert(index < 0); assert(size_ < index);
+    assert(index >= 0); assert(size_ > index);
     return data_[index];
 }
 
@@ -336,6 +334,7 @@ Vector<T>& Vector<T>::operator+=(const Vector &other){
         data_ = data;
     }
     std::memcpy(&data_[size_], other.data_, other.size_*sizeof(T));
+    size_ += other.size_;
     return *this;
 }
 
