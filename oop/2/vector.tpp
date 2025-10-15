@@ -160,11 +160,13 @@ bool Vector<T>::insert(const size_t index, const T &value){
         T *data = new T[capacity_];
         std::memcpy(data, data_, (index)*sizeof(T));
         data[index] = value;
-        std::memcpy(&data[index+1], &data_[index], (size_ - index) * sizeof(TMP_MAX)); 
+        std::memcpy(&data[index+1], &data_[index], (size_ - index) * sizeof(T)); 
         delete[] data_;
         data_ = data;
-    } else
+    } else{
         std::memmove(&data_[index+1], &data_[index], (size_ - index)*sizeof(T));
+        data_[index] = value;
+    }
     size_++;
     return true;
 }
