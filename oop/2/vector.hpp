@@ -22,7 +22,7 @@ class Vector {
     friend std::ostream & operator << (std::ostream &cout, const Vector &vec);
     friend std::istream & operator >> (std::istream &cin, Vector &vec);
 
-    void sort(bool reverse=false);
+    void sort();
 
     bool insert(const int index, const int value);
     bool pop(const int index);
