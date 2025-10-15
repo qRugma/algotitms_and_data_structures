@@ -16,6 +16,12 @@ Vector::Vector(int* mas, int len){
     std::memcpy(data_, mas, size_*sizeof(int));
 }
 
+Vector::Vector(const Vector &other){
+    capacity_ = size_ = other.size_;
+    data_ = new int[capacity_];
+    std::memcpy(data_, other.data_, size_*sizeof(int));
+}
+
 Vector::Vector(const std::initializer_list<int>& l){
     size_ = capacity_ = l.size();
     data_ = new int[capacity_];
@@ -26,7 +32,9 @@ Vector::Vector(const std::initializer_list<int>& l){
 
 Vector::Vector(Vector &&vec){
     size_ = vec.size_;
+    vec.size_ = 0;
     capacity_ = vec.capacity_;
+    vec.capacity_ = 0;
     data_ = vec.data_;
     vec.data_ = nullptr;
 }
@@ -81,8 +89,10 @@ bool Vector::insert(const int index, const int value){
         std::memcpy(&data[index+1], &data_[index], (size_ - index) * sizeof(int)); 
         delete[] data_;
         data_ = data;
-    } else
+    } else{
         std::memmove(&data_[index+1], &data_[index], (size_ - index)*sizeof(int));
+        data_[index] = value;
+    }
     size_++;
     return true;
 }

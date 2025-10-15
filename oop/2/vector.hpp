@@ -11,6 +11,8 @@ class Vector {
     
     Vector(const std::initializer_list<int>&);
     
+    Vector(const Vector &vec);
+
     Vector(Vector &&vec);
     
     int size() const;

@@ -18,6 +18,7 @@ class Vector {
 
     Vector(const std::initializer_list<T>&);
     
+    Vector(const Vector &vec);
     Vector(Vector &&vec);
 
     ~Vector();
@@ -84,9 +85,18 @@ Vector<T>::Vector(const std::initializer_list<T>& l){
 }
 
 template<typename T>
+Vector<T>::Vector(const Vector<T> &other){
+    capacity_ = size_ = other.size_;
+    data_ = new T[capacity_];
+    std::memcpy(data_, other.data_, size_*sizeof(int));
+}
+
+template<typename T>
 Vector<T>::Vector(Vector<T> &&vec){
     size_ = vec.size_;
+    vec.size_ = 0;
     capacity_ = vec.capacity_;
+    vec.capacity_ = 0;
     data_ = vec.data_;
     vec.data_ = nullptr;
 }
