@@ -183,7 +183,7 @@ bool Vector<T>::insert(T* iter, const T& value){
 
 template<typename T>
 T Vector<T>::pop(const size_t index){
-    assert(index >= 0); assert(size_ > index);
+    assert(size_ > index);
     T poped = data_[index];
     std::memmove(&data_[index], &data_[index+1], (size_ - index)*sizeof(T));
     size_--;
@@ -231,7 +231,7 @@ bool Vector<T>::remove_all(const T &value){
 template<typename T>
 T Vector<T>::max() const{
     int max=0;
-    assert(size_ != 0);
+    assert(size_ > 0);
     max = data_[0];
     for(size_t i=1; i<size_; i++)
         max = max < data_[i]? data_[i] : max;
@@ -241,7 +241,7 @@ T Vector<T>::max() const{
 template<typename T>
 T Vector<T>::min() const{
     int min=0;
-    assert(size_ != 0);
+    assert(size_ > 0);
     min = data_[0];
     for(size_t i=1; i<size_; i++)
         min = min > data_[i]? data_[i] : min;

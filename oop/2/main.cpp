@@ -13,7 +13,7 @@ int main(){
     Vector<int> vec(mas, 5), vec2(mas2, 3);
     Vector<short int> vecs = {0, 2, 3, 3, 3, 1, 6, 5, 4};
     std::cout << "0 - auto, 1 - write\n";
-    // std::cin >> choise;
+    std::cin >> choise;
     if (choise){
         std::cout << "write 5 elements for vec: ";
         std::cin >> vec;
