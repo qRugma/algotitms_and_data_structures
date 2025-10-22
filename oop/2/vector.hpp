@@ -12,14 +12,14 @@ class Vector {
     Vector(const std::initializer_list<int>&);
     
     Vector(const Vector &vec);
-
+    
     Vector(Vector &&vec);
     
     int size() const;
 
     void swap(Vector &other);
 
-    int find(int elem) const;
+    int find(const int elem) const;
 
     friend std::ostream & operator << (std::ostream &cout, const Vector &vec);
     friend std::istream & operator >> (std::istream &cin, Vector &vec);
@@ -37,6 +37,11 @@ class Vector {
     int* end();
     const int* begin() const;
     const int* end() const;
+
+    bool pushfrom(int* iter, int value);
+    int pop(int* iter);
+    void pop(int* begin, int* end);
+
 
     int& operator[](int index);
     const int& operator[](int index) const;

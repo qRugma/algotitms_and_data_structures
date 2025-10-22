@@ -13,7 +13,7 @@ int main(){
     Vector<int> vec(mas, 5), vec2(mas2, 3);
     Vector<short int> vecs = {0, 2, 3, 3, 3, 1, 6, 5, 4};
     std::cout << "0 - auto, 1 - write\n";
-    std::cin >> choise;
+    // std::cin >> choise;
     if (choise){
         std::cout << "write 5 elements for vec: ";
         std::cin >> vec;
@@ -27,7 +27,11 @@ int main(){
     std::cout << vec << std::endl;
     vec.swap(vec2);
     std::cout << "vec.find(vec[3]): " << vec.find(vec[3]) << std::endl;
-    std::cout << "vec.insert(index: 3, value: 5)\n";
+    std::cout << "vec.insert(index: 3, value: 5) * 5\n";
+    vec.insert(3, 5);
+    vec.insert(3, 5);
+    vec.insert(3, 5);
+    vec.insert(3, 5);
     vec.insert(3, 5);
     std::cout << vec << std::endl;
     std::cout << "vec.pop(index: 3)\n";
@@ -43,6 +47,18 @@ int main(){
     vecs.remove_all(3);
     std::cout << vecs << std::endl;
     
+    std::cout << "vecs.pushfrom(iter: vecs.begin(), value: 50)" << std::endl;
+    vecs.pushfrom(vecs.begin(), 50);
+    std::cout << vecs << std::endl;
+
+    std::cout << "vecs.pop(iter: vecs.begin())" << std::endl;
+    vecs.pop(vecs.begin());
+    std::cout << vecs << std::endl;
+    
+    std::cout << "vecs.pop(iter: vec.begin() + 3, iter: vec.end()) - 2" << std::endl;
+    vec.pop(vec.begin() + 3, vec.end() - 2);
+    std::cout << vec << std::endl;
+
     std::cout << "vec.max(): " << vec.max() << std::endl;
     std::cout << "vec.min(): " << vec.min() << std::endl;
     

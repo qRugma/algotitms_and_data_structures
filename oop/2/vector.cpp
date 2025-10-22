@@ -2,7 +2,7 @@
 #include <cstring>
 #include <cassert>
 
-#include "sort.cpp"
+#include "sort.hpp"
 #include "vector.hpp"
 
 Vector::Vector(const int capacity){
@@ -30,13 +30,13 @@ Vector::Vector(const std::initializer_list<int>& l){
         data_[j++] = *i;
 }
 
-Vector::Vector(Vector &&vec){
-    size_ = vec.size_;
-    vec.size_ = 0;
-    capacity_ = vec.capacity_;
-    vec.capacity_ = 0;
-    data_ = vec.data_;
-    vec.data_ = nullptr;
+Vector::Vector(Vector &&other){
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+    data_ = other.data_;
+    other.data_ = nullptr;
+    other.size_ = 0;
+    other.capacity_ = 0;
 }
 
 int Vector::size() const{
@@ -55,7 +55,7 @@ void Vector::swap(Vector &other){
     data_ = data;
 }
 
-int Vector::find(int elem) const{
+int Vector::find(const int elem) const{
     for(int i=0; i<size_; i++)
         if (data_[i] == elem)
             return i;
@@ -125,6 +125,22 @@ bool Vector::remove_all(const int value){
     }
     size_ -= shift;
     return shift;
+}
+
+bool Vector::pushfrom(int* iter, int value){
+    return insert(iter-data_, value);
+}
+
+int Vector::pop(int* iter){
+    return pop(iter-data_);
+}
+
+void Vector::pop(int* begin, int* end){
+    size_t count = end - begin;
+    size_t index = begin - data_;
+    assert(end <= data_ + size_); assert(data_ <= begin);
+    std::memmove(begin, end, (data_ + size_ - end)*sizeof(int));
+    size_ -= count;
 }
 
 int Vector::max() const{
@@ -208,6 +224,8 @@ Vector& Vector::operator=(Vector &&other){
         capacity_ = other.capacity_;
         data_ = other.data_;
         other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
     }
     return *this;
 }

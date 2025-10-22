@@ -1,6 +1,7 @@
 #include <utility>
 
-void heapify(int* mas, int len, int i){
+template<typename T>
+void heapify(T* mas, int len, int i){
     int maxChild = (mas[2*i+1] < mas[2*i+2]) and (2*i+2 < len) ? 2*i+2 : 2*i+1;
     if (mas[i] >= mas[maxChild])
         return;
@@ -9,7 +10,8 @@ void heapify(int* mas, int len, int i){
         heapify(mas, len, maxChild);
 }
 
-void PiramSort(int* mas, int len){
+template<typename T>
+void PiramSort(T* mas, int len){
     const int sep = len/2-1;
     for(int i = sep; i >= 0; i--)
         heapify(mas, len, i);

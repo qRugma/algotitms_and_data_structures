@@ -2,7 +2,7 @@
 #include <cstring>
 #include <cassert>
 #include <initializer_list>
-#include "sort.cpp"
+#include "sort.hpp"
 
 template<typename T>
 class Vector {
@@ -27,7 +27,7 @@ class Vector {
 
     void swap(Vector &other);
 
-    int find(T& elem) const;
+    int find(const T& elem) const;
 
     template<typename I>
     friend std::ostream & operator << (std::ostream &cout, const Vector<I> &vec);
@@ -47,6 +47,10 @@ class Vector {
     T* end();
     const T* begin() const;
     const T* end() const;
+
+    bool pushfrom(T* iter, const T& value);
+    T pop(T* iter);
+    void pop(T* begin, T* end);
 
     T& operator[](int index);
     const T& operator[](int index) const;
@@ -92,13 +96,13 @@ Vector<T>::Vector(const Vector<T> &other){
 }
 
 template<typename T>
-Vector<T>::Vector(Vector<T> &&vec){
-    size_ = vec.size_;
-    vec.size_ = 0;
-    capacity_ = vec.capacity_;
-    vec.capacity_ = 0;
-    data_ = vec.data_;
-    vec.data_ = nullptr;
+Vector<T>::Vector(Vector<T> &&other){
+    size_ = other.size_;
+    capacity_ = other.capacity_;
+    data_ = other.data_;
+    other.data_ = nullptr;
+    other.size_ = 0;
+    other.capacity_ = 0;
 }
 
 template<typename T>
@@ -125,7 +129,7 @@ void Vector<T>::swap(Vector<T> &other){
 }
 
 template<typename T>
-int Vector<T>::find(T& elem) const{
+int Vector<T>::find(const T& elem) const{
     for(size_t i=0; i<size_; i++)
         if (data_[i] == elem)
             return i;
@@ -245,6 +249,25 @@ const T* Vector<T>::end() const{
 }
 
 template<typename T>
+bool Vector<T>::pushfrom(T* iter, const T& value){
+    return insert(iter-data_, value);
+}
+
+template<typename T>
+T Vector<T>::pop(T* iter){
+    return pop(iter-data_);
+}
+
+template<typename T>
+void Vector<T>::pop(T* begin, T* end){
+    size_t count = end - begin;
+    size_t index = begin - data_;
+    assert(end <= data_ + size_); assert(data_ <= begin);
+    std::memmove(begin, end, (data_ + size_ - end)*sizeof(T));
+    size_ -= count;
+}
+
+template<typename T>
 const T& Vector<T>::operator[](int index) const{
     assert(index >= 0); assert(size_ > index);
     return data_[index];
@@ -297,6 +320,8 @@ Vector<T>& Vector<T>::operator=(Vector<T> &&other){
         capacity_ = other.capacity_;
         data_ = other.data_;
         other.data_ = nullptr;
+        other.size_ = 0;
+        other.capacity_ = 0;
     }
     return *this;
 }
