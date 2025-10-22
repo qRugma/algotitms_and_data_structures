@@ -1,6 +1,6 @@
 class Vector {
-    int size_ = 0;
-    int capacity_ = 8;
+    size_t size_ = 0;
+    size_t capacity_ = 8;
     int* data_ = nullptr;
 
     
@@ -15,6 +15,8 @@ class Vector {
     
     Vector(Vector &&vec);
     
+    ~Vector();
+
     int size() const;
 
     void swap(Vector &other);
@@ -26,10 +28,13 @@ class Vector {
 
     void sort();
 
-    bool insert(const int index, const int value);
-    bool pop(const int index);
-    bool remove(const int value);
-    bool remove_all(const int value);
+    bool insert(size_t index, int value);
+    bool insert(int* iter, int value);
+    bool pop(size_t index);
+    bool pop(int* iter);
+    void pop(int* begin, int* end);
+    bool remove(int value);
+    bool remove_all(int value);
     int max() const;
     int min() const;
 
@@ -38,13 +43,9 @@ class Vector {
     const int* begin() const;
     const int* end() const;
 
-    bool pushfrom(int* iter, int value);
-    int pop(int* iter);
-    void pop(int* begin, int* end);
 
-
-    int& operator[](int index);
-    const int& operator[](int index) const;
+    int& operator[](size_t index);
+    const int& operator[](size_t index) const;
     Vector& operator=(const Vector &other);
     Vector operator+(int value) const;
     Vector& operator+=(int value);

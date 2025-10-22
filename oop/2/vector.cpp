@@ -39,6 +39,11 @@ Vector::Vector(Vector &&other){
     other.capacity_ = 0;
 }
 
+Vector::~Vector(){
+    delete[] data_;
+}
+
+
 int Vector::size() const{
     return size_;
 }
@@ -78,7 +83,7 @@ void Vector::sort(){
     PiramSort(data_, size_);
 }
 
-bool Vector::insert(const int index, const int value){
+bool Vector::insert(size_t index, const int value){
     if ((index < 0) or (size_ < index))
         return false;
     else if (capacity_ < size_ + 1){
@@ -97,13 +102,31 @@ bool Vector::insert(const int index, const int value){
     return true;
 }
 
-bool Vector::pop(const int index){
-    if ((index < 0) or (size_ < index))
+bool Vector::insert(int* iter, int value){
+    return insert(iter-data_, value);
+}
+
+bool Vector::pop(const size_t index){
+    if (size_ < index)
         return false;
     std::memmove(&data_[index], &data_[index+1], (size_ - index)*sizeof(int));
     size_--;
     return true;
 }
+
+bool Vector::pop(int* iter){
+    return pop(iter-data_);
+}
+
+void Vector::pop(int* begin, int* end){
+    size_t count = end - begin;
+    size_t index = begin - data_;
+    assert(end <= data_ + size_); assert(data_ <= begin);
+    std::memmove(begin, end, (data_ + size_ - end)*sizeof(int));
+    size_ -= count;
+}
+
+
 
 bool Vector::remove(const int value){
     bool find = false;
@@ -127,25 +150,9 @@ bool Vector::remove_all(const int value){
     return shift;
 }
 
-bool Vector::pushfrom(int* iter, int value){
-    return insert(iter-data_, value);
-}
-
-int Vector::pop(int* iter){
-    return pop(iter-data_);
-}
-
-void Vector::pop(int* begin, int* end){
-    size_t count = end - begin;
-    size_t index = begin - data_;
-    assert(end <= data_ + size_); assert(data_ <= begin);
-    std::memmove(begin, end, (data_ + size_ - end)*sizeof(int));
-    size_ -= count;
-}
-
 int Vector::max() const{
     int max=0;
-    assert(size_ != 0);
+    assert(size_ > 0);
     max = data_[0];
     for(size_t i=1; i<size_; i++)
         max = max < data_[i]? data_[i] : max;
@@ -154,7 +161,7 @@ int Vector::max() const{
 
 int Vector::min() const{
     int min=0;
-    assert(size_ != 0);
+    assert(size_ > 0);
     min = data_[0];
     for(size_t i=1; i<size_; i++)
         min = min > data_[i]? data_[i] : min;
@@ -177,13 +184,13 @@ const int* Vector::end() const{
     return &data_[size_];
 }
 
-const int& Vector::operator[](int index) const{
-    assert(index >= 0); assert(size_ > index);
+const int& Vector::operator[](size_t index) const{
+    assert(size_ > index);
     return data_[index];
 }
 
-int& Vector::operator[](int index){
-    assert(index >= 0); assert(size_ > index);
+int& Vector::operator[](size_t index){
+    assert(size_ > index);
     return data_[index];
 }
 

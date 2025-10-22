@@ -6,8 +6,8 @@
 
 template<typename T>
 class Vector {
-    int size_ = 0;
-    int capacity_ = 0;
+    size_t size_ = 0;
+    size_t capacity_ = 0;
     T* data_ = nullptr;
 
     
@@ -19,6 +19,7 @@ class Vector {
     Vector(const std::initializer_list<T>&);
     
     Vector(const Vector &vec);
+
     Vector(Vector &&vec);
 
     ~Vector();
@@ -37,7 +38,10 @@ class Vector {
     void sort();
 
     bool insert(const size_t index, const T& value);
+    bool insert(T* iter, const T& value);
     T pop(const size_t index);
+    T pop(T* iter);
+    void pop(T* begin, T* end);
     bool remove(const T &value);
     bool remove_all(const T &value);
     T max() const;
@@ -48,12 +52,9 @@ class Vector {
     const T* begin() const;
     const T* end() const;
 
-    bool pushfrom(T* iter, const T& value);
-    T pop(T* iter);
-    void pop(T* begin, T* end);
 
-    T& operator[](int index);
-    const T& operator[](int index) const;
+    T& operator[](size_t index);
+    const T& operator[](size_t index) const;
     Vector& operator=(const Vector &other);
     Vector operator+(const T &value) const;
     Vector& operator+=(const T &value);
@@ -176,12 +177,31 @@ bool Vector<T>::insert(const size_t index, const T &value){
 }
 
 template<typename T>
+bool Vector<T>::insert(T* iter, const T& value){
+    return insert(iter-data_, value);
+}
+
+template<typename T>
 T Vector<T>::pop(const size_t index){
     assert(index >= 0); assert(size_ > index);
     T poped = data_[index];
     std::memmove(&data_[index], &data_[index+1], (size_ - index)*sizeof(T));
     size_--;
     return poped;
+}
+
+template<typename T>
+T Vector<T>::pop(T* iter){
+    return pop(iter-data_);
+}
+
+template<typename T>
+void Vector<T>::pop(T* begin, T* end){
+    size_t count = end - begin;
+    size_t index = begin - data_;
+    assert(end <= data_ + size_); assert(data_ <= begin);
+    std::memmove(begin, end, (data_ + size_ - end)*sizeof(T));
+    size_ -= count;
 }
 
 template<typename T>
@@ -249,33 +269,14 @@ const T* Vector<T>::end() const{
 }
 
 template<typename T>
-bool Vector<T>::pushfrom(T* iter, const T& value){
-    return insert(iter-data_, value);
-}
-
-template<typename T>
-T Vector<T>::pop(T* iter){
-    return pop(iter-data_);
-}
-
-template<typename T>
-void Vector<T>::pop(T* begin, T* end){
-    size_t count = end - begin;
-    size_t index = begin - data_;
-    assert(end <= data_ + size_); assert(data_ <= begin);
-    std::memmove(begin, end, (data_ + size_ - end)*sizeof(T));
-    size_ -= count;
-}
-
-template<typename T>
-const T& Vector<T>::operator[](int index) const{
-    assert(index >= 0); assert(size_ > index);
+const T& Vector<T>::operator[](size_t index) const{
+    assert(size_ > index);
     return data_[index];
 }
 
 template<typename T>
-T& Vector<T>::operator[](int index){
-    assert(index >= 0); assert(size_ > index);
+T& Vector<T>::operator[](size_t index){
+    assert(size_ > index);
     return data_[index];
 }
 

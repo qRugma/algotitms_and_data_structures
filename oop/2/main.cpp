@@ -47,8 +47,8 @@ int main(){
     vecs.remove_all(3);
     std::cout << vecs << std::endl;
     
-    std::cout << "vecs.pushfrom(iter: vecs.begin(), value: 50)" << std::endl;
-    vecs.pushfrom(vecs.begin(), 50);
+    std::cout << "vecs.insert(iter: vecs.begin(), value: 50)" << std::endl;
+    vecs.insert(vecs.begin(), 50);
     std::cout << vecs << std::endl;
 
     std::cout << "vecs.pop(iter: vecs.begin())" << std::endl;
