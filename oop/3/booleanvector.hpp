@@ -23,18 +23,17 @@ class BooleanVector{
 
     BooleanVector& operator=(const BooleanVector&);
     BooleanVector& operator=(BooleanVector&&);
-    
+
     uint32_t getLenght() const;
     uint32_t getWeight() const;
     void swap(BooleanVector);
-    friend std::ostream & operator << (std::ostream &cout, const BooleanVector &vec);
-    friend std::istream & operator >> (std::istream &cin, BooleanVector &vec);
     void invert_all();
     void invert(const uint32_t index);
-    void set_value(const bool value, const uint32_t index);
-    void set_value_from(const bool value, const uint32_t index);
-    void set_value_all(const bool value);
+    void set_value(bool value, uint32_t index);
+    void set_value_from(bool value, uint32_t index, uint32_t k);
+    void set_value_all(bool value);
     Component operator[](const uint32_t index) const;
+    Component operator[](const uint32_t index);
     BooleanVector operator&(const BooleanVector&) const;
     BooleanVector& operator&=(const BooleanVector&);
     BooleanVector operator|(const BooleanVector&) const;
@@ -48,6 +47,8 @@ class BooleanVector{
     BooleanVector operator~() const;
 };
 
+std::ostream & operator << (std::ostream &cout, const BooleanVector &vec);
+std::istream & operator >> (std::istream &cin, BooleanVector &vec);
 
 
 class BooleanVector::Component{
@@ -60,3 +61,13 @@ class BooleanVector::Component{
     operator bool();
     Component& operator=(const bool value);
 };
+
+// class BooleanVector::Component_const{
+//     uint8_t *bytePtr_;
+//     uint32_t bitIndex_;
+
+//     public:
+//     Component_const(uint8_t* const bytePtr, const uint8_t bitIndex);
+
+//     operator bool();
+// };
