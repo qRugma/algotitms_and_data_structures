@@ -55,7 +55,6 @@ BooleanVector::~BooleanVector(){
 }
 
 BooleanVector::BooleanVector(const BooleanVector& other){
-    delete[] data_;
     numBits_ = other.numBits_;
     uint32_t numBytes = getNumBytes();
     data_ = new uint8_t[numBytes];
@@ -63,7 +62,6 @@ BooleanVector::BooleanVector(const BooleanVector& other){
         data_[byte] = other.data_[byte];
 }
 BooleanVector::BooleanVector(BooleanVector&& other){
-    delete[] data_;
     numBits_ = other.numBits_;
     other.numBits_ = 0;
     data_ = other.data_;
@@ -71,7 +69,8 @@ BooleanVector::BooleanVector(BooleanVector&& other){
 }
 
 BooleanVector& BooleanVector::operator=(const BooleanVector& other){
-    delete[] data_;
+    if (this != &other)
+        delete[] data_;
     numBits_ = other.numBits_;
     uint32_t numBytes = getNumBytes();
     data_ = new uint8_t[numBytes];
@@ -115,11 +114,8 @@ void BooleanVector::swap(BooleanVector other){
 }
 
 std::ostream & operator << (std::ostream &cout, const BooleanVector &vec){
-    for(uint32_t bit=0; bit < vec.numBits_; bit++){
-        uint32_t byteIndex = vec.getByteIndex(bit);
-        uint32_t bitIndex = vec.getBitIndex(bit);
-    
-        cout << (bool)(vec.data_[byteIndex] & (1 << bitIndex));
+    for(uint32_t bit=0; bit < vec.getLenght(); bit++){
+        cout << vec[bit];
     }
     return cout;
 }
@@ -152,8 +148,8 @@ void BooleanVector::set_value(const bool value, const uint32_t index){
 }
 
 
-void BooleanVector::set_value_from(const bool value, const uint32_t index){
-    for(uint32_t bit=index; bit < numBits_; bit++)
+void BooleanVector::set_value_from(const bool value, const uint32_t index, const uint32_t k){
+    for(uint32_t bit=index; (bit < numBits_) and (bit < (index + k)); bit++)
         set_value(value, bit);
 }
 
@@ -167,6 +163,13 @@ void BooleanVector::set_value_all(const bool value){
 }
 
 BooleanVector::Component BooleanVector::operator[](const uint32_t index) const{
+    uint32_t byteIndex = getByteIndex(index);
+    uint32_t bitIndex = getBitIndex(index);
+
+    return BooleanVector::Component(&data_[byteIndex], bitIndex);
+}
+
+BooleanVector::Component BooleanVector::operator[](const uint32_t index){
     uint32_t byteIndex = getByteIndex(index);
     uint32_t bitIndex = getBitIndex(index);
 
@@ -228,14 +231,14 @@ BooleanVector BooleanVector::operator<<(int value) const{
     BooleanVector tmp = *this;
     for(uint32_t bit=0; bit+value<numBits_; bit++)
         tmp[bit] = (bool) tmp[bit+value];
-    tmp.set_value_from(0, numBits_-value);
+    tmp.set_value_from(0, numBits_-value, value);
     return tmp;
 }
 
 BooleanVector& BooleanVector::operator<<=(int value){
     for(uint32_t bit=0; bit+value<numBits_; bit++)
         (*this)[bit] = (bool) (*this)[bit+value];
-    set_value_from(0, numBits_-value);
+    set_value_from(0, numBits_-value, value);
     return *this;
 }
 
@@ -247,6 +250,7 @@ BooleanVector BooleanVector::operator>>(int value) const{
     for(uint32_t bit=0; bit < value; bit++){
         tmp[bit] = 0;
     }
+    tmp.set_value_from(0, 0, value);
     return tmp;
 }
 
@@ -257,6 +261,7 @@ BooleanVector& BooleanVector::operator>>=(int value){
     for(uint32_t bit=0; bit < value; bit++){
         (*this)[bit] = 0;
     }
+    set_value_from(0, 0, value);
     return *this;
 }
 
