@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "booleanvector.cpp"
+#include "booleanvector.hpp"
 
 int main(){
     BooleanVector vec = "10101";
