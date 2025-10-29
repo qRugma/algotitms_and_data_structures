@@ -39,8 +39,6 @@ int main(){
 
 
     BooleanVector vec0(10, 0), vec1(10, 1);
-    std::cout << vec.getLenght() << std::endl;
-    std::cout << vec0.getLenght() << std::endl;
     vec0.set_value(1, 9);
     vec1.set_value_from(0,6, 2);
     std::cout << "vec0 = " << vec0 << std::endl;

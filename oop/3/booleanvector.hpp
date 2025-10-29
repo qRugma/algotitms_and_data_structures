@@ -5,6 +5,7 @@ class BooleanVector{
     uint8_t *data_ = nullptr;
     uint32_t numBits_ = 0;
     class Component;
+    class Component_const;
 
     uint32_t getByteIndex(uint32_t bit) const;
     uint32_t getBitIndex(uint32_t bit) const;
@@ -32,7 +33,7 @@ class BooleanVector{
     void set_value(bool value, uint32_t index);
     void set_value_from(bool value, uint32_t index, uint32_t k);
     void set_value_all(bool value);
-    Component operator[](const uint32_t index) const;
+    Component_const operator[](const uint32_t index) const;
     Component operator[](const uint32_t index);
     BooleanVector operator&(const BooleanVector&) const;
     BooleanVector& operator&=(const BooleanVector&);
@@ -62,12 +63,12 @@ class BooleanVector::Component{
     Component& operator=(const bool value);
 };
 
-// class BooleanVector::Component_const{
-//     uint8_t *bytePtr_;
-//     uint32_t bitIndex_;
+class BooleanVector::Component_const{
+    uint8_t *bytePtr_;
+    uint32_t bitIndex_;
 
-//     public:
-//     Component_const(uint8_t* const bytePtr, const uint8_t bitIndex);
+    public:
+    Component_const(uint8_t* const bytePtr, const uint8_t bitIndex);
 
-//     operator bool();
-// };
+    operator bool();
+};

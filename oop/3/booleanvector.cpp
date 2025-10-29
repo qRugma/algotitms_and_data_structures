@@ -162,11 +162,11 @@ void BooleanVector::set_value_all(const bool value){
         data_[byte] = elem;
 }
 
-BooleanVector::Component BooleanVector::operator[](const uint32_t index) const{
+BooleanVector::Component_const BooleanVector::operator[](const uint32_t index) const{
     uint32_t byteIndex = getByteIndex(index);
     uint32_t bitIndex = getBitIndex(index);
 
-    return BooleanVector::Component(&data_[byteIndex], bitIndex);
+    return BooleanVector::Component_const(&data_[byteIndex], bitIndex);
 }
 
 BooleanVector::Component BooleanVector::operator[](const uint32_t index){
@@ -287,4 +287,11 @@ BooleanVector::Component& BooleanVector::Component::operator=(const bool value){
     else 
         *bytePtr_ &= ~mask;
     return *this;
+}
+
+BooleanVector::Component_const::Component_const(uint8_t* const bytePtr, const uint8_t bitIndex)
+ : bytePtr_(bytePtr), bitIndex_(bitIndex) {}
+
+BooleanVector::Component_const::operator bool(){
+    return *bytePtr_ & (1 << bitIndex_);
 }
