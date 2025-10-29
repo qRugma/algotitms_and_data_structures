@@ -69,8 +69,9 @@ BooleanVector::BooleanVector(BooleanVector&& other){
 }
 
 BooleanVector& BooleanVector::operator=(const BooleanVector& other){
-    if (this != &other)
-        delete[] data_;
+    if (this == &other)
+        return *this;    
+    delete[] data_;
     numBits_ = other.numBits_;
     uint32_t numBytes = getNumBytes();
     data_ = new uint8_t[numBytes];
