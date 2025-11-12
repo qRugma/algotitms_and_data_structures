@@ -46,3 +46,6 @@
 # sub files
 template.cpp
 testing
+
+# data files
+*.txt
