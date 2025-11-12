@@ -55,7 +55,7 @@ int main(){
     for(int size=10000; size<=1000000; size*=10)
         for(int d=10; d<=100000; d*=100){
             char buf[100];
-            snprintf(buf, sizeof(buf), "S%dD%d.txt", size, d);
+            snprintf(buf, sizeof(buf), "../data/S%dD%d.txt", size, d);
             fout.open(buf);
             std::uniform_int_distribution<int> distribution(-d, d);
             int *mas = new int[size];
