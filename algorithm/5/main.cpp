@@ -29,8 +29,7 @@ void sort3(int A[], int len){
 struct elem{int L, R;};
 
 void nonRecH(int mas[], int size){
-    int len = log2(size) + 1;
-    elem *S = new elem[len];
+    elem *S = new elem[ceil(log2(size))];
     int k=0; S[0].L=0; S[0].R=size-1;
     while(k>=0){
         int l = S[k].L, r = S[k].R; k--;
@@ -53,8 +52,6 @@ void nonRecH(int mas[], int size){
             k++; S[k].L=l; S[k].R=j;
             k++; S[k].L=i; S[k].R=r;
         }
-        if (k>=len)
-            std::cout << "opps" << std::endl;
     }
 }
 
@@ -68,10 +65,8 @@ bool is_sorted(int* begin, int* end){
 
 int main(){
     std::ifstream fin;
-    // const int len = 8;
-    const int len = 11;
-    // int mas[] = {6, 7, 11, 4, 3, 1, 2, 9};
-    int mas[] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+    const int len = 8;
+    int mas[] = {6, 7, 11, 4, 3, 1, 2, 9};
     nonRecH(mas, len);
     for(int i=0; i<len; i++)
         std::cout << mas[i] << " ";
