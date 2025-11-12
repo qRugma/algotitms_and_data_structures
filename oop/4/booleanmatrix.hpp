@@ -1,5 +1,7 @@
+#pragma once
+
 #include "vector.tpp"
-#include "booleanvector.cpp"
+#include "booleanvector.hpp"
 
 class BooleanMatrix{
     Vector<BooleanVector> data_;
@@ -8,9 +10,8 @@ class BooleanMatrix{
     BooleanMatrix();
     BooleanMatrix(const char*[], size_t rows);
     BooleanMatrix(size_t columns, size_t rows);
-    BooleanMatrix(const BooleanMatrix&);
-    BooleanMatrix(BooleanMatrix&&);
-    ~BooleanMatrix();
+    BooleanMatrix(const BooleanMatrix&) = default;
+    ~BooleanMatrix() = default;
     int columns() const;
     int rows() const;
     void swap(BooleanMatrix&);
@@ -25,8 +26,6 @@ class BooleanMatrix{
     void set(size_t row, size_t column, bool value);
     void set_k(size_t row, size_t column, bool value, size_t k);
 
-    BooleanMatrix& operator=(const BooleanMatrix&);
-    BooleanMatrix& operator=(BooleanMatrix&&);
     BooleanVector& operator[](size_t index);
     const BooleanVector& operator[](size_t index) const;
     BooleanMatrix operator&(const BooleanMatrix&) const;

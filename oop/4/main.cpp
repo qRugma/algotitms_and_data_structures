@@ -1,5 +1,5 @@
 #include <iostream>
-#include "booleanmatrix.cpp"
+#include "booleanmatrix.hpp"
 
 int main(){
     const char* data[] = {"101", "010"};

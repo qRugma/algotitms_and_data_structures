@@ -16,23 +16,6 @@ BooleanMatrix::BooleanMatrix(size_t columns, size_t rows)
         data_[i] = BooleanVector(columns_, 0);
 }
 
-BooleanMatrix::BooleanMatrix(const BooleanMatrix& other){
-    data_ = other.data_;
-    columns_ = other.columns_;
-    rows_ = other.rows_;
-}
-
-BooleanMatrix::BooleanMatrix(BooleanMatrix&& other){
-    data_ = std::move(other.data_);
-    columns_ = other.columns_;
-    rows_ = other.rows_;
-    other.columns_ = 0;
-    other.rows_ = 0;
-}
-
-BooleanMatrix::~BooleanMatrix(){}
-
-
 int BooleanMatrix::columns() const{
     return columns_;
 }
@@ -96,24 +79,6 @@ void BooleanMatrix::set(size_t row, size_t column, bool value){
 void BooleanMatrix::set_k(size_t row, size_t column, bool value, size_t k){
     assert(row < rows_); assert(column + k <= columns_);
     data_[row].set_value_from(value, column, k);
-}
-
-BooleanMatrix& BooleanMatrix::operator=(const BooleanMatrix& other){
-    if (this == &other)
-        return *this;
-    data_ = other.data_;
-    columns_ = other.columns_;
-    rows_ = other.rows_;
-    return *this;
-}
-
-BooleanMatrix& BooleanMatrix::operator=(BooleanMatrix&& other){
-    data_ = std::move(other.data_);
-    columns_ = other.columns_;
-    rows_ = other.rows_;
-    other.columns_ = 0;
-    other.rows_ = 0;
-    return *this;
 }
 
 BooleanVector& BooleanMatrix::operator[](size_t index){
@@ -184,6 +149,8 @@ std::ostream & operator << (std::ostream &cout, const BooleanMatrix &mat){
     return cout;
 }
 std::istream & operator >> (std::istream &cin, BooleanMatrix &mat){
+    
+
     return cin;
 }
 
