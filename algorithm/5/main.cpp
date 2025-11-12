@@ -29,7 +29,7 @@ void sort3(int A[], int len){
 struct elem{int L, R;};
 
 void nonRecH(int mas[], int size){
-    elem *S = new elem[ceil(log2(size))];
+    elem *S = new elem[(int) ceil(log2(size))];
     int k=0; S[0].L=0; S[0].R=size-1;
     while(k>=0){
         int l = S[k].L, r = S[k].R; k--;
@@ -76,7 +76,7 @@ int main(){
     for(int size=10000; size<=1000000; size*=10)
         for(int d=10; d<=100000; d*=100){
             char buf[100];
-            snprintf(buf, sizeof(buf), "S%dD%d.txt", size, d);
+            snprintf(buf, sizeof(buf), "../data/S%dD%d.txt", size, d);
             fin.open(buf);
             int *mas = new int[size];
             for(int i=0; i<size; i++)
