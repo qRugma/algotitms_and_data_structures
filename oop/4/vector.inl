@@ -6,6 +6,7 @@
 template<typename T>
 Vector<T>::Vector(const int capacity){
     capacity_ = capacity;
+    size_ = capacity_;
     data_ = new T[capacity_];
 }
 
@@ -13,7 +14,8 @@ template<typename T>
 Vector<T>::Vector(T *mas, int len){
     capacity_ = size_ = len;
     data_ = new T[capacity_];
-    std::memcpy(data_, mas, size_*sizeof(T));
+    for(size_t i=0; i<size_; i++)
+        data_[i] = mas[i];
 }
 
 template<typename T>
@@ -29,7 +31,8 @@ template<typename T>
 Vector<T>::Vector(const Vector<T> &other){
     capacity_ = size_ = other.size_;
     data_ = new T[capacity_];
-    std::memcpy(data_, other.data_, size_*sizeof(int));
+    for(size_t i=0; i<size_; i++)
+        data_[i] = other.data_[i];
 }
 
 template<typename T>
@@ -121,7 +124,9 @@ template<typename T>
 T Vector<T>::pop(const size_t index){
     assert(size_ > index);
     T poped = data_[index];
-    std::memmove(&data_[index], &data_[index+1], (size_ - index)*sizeof(T));
+    // std::memmove(&data_[index], &data_[index+1], (size_ - index)*sizeof(T));
+    for(size_t i=index; i<size_-1; i++)
+        data_[i] = data_[i+1];
     size_--;
     return poped;
 }
@@ -136,7 +141,9 @@ void Vector<T>::pop(T* begin, T* end){
     size_t count = end - begin;
     size_t index = begin - data_;
     assert(end <= data_ + size_); assert(data_ <= begin);
-    std::memmove(begin, end, (data_ + size_ - end)*sizeof(T));
+    // std::memmove(begin, end, (data_ + size_ - end)*sizeof(T));
+    for(size_t i=0; i<count; i++)
+        *(begin+i) = *(end+i);
     size_ -= count;
 }
 
@@ -206,13 +213,13 @@ const T* Vector<T>::end() const{
 
 template<typename T>
 const T& Vector<T>::operator[](size_t index) const{
-    assert(size_ > index);
+    assert(index < size_);
     return data_[index];
 }
 
 template<typename T>
 T& Vector<T>::operator[](size_t index){
-    assert(size_ > index);
+    assert(index < size_);
     return data_[index];
 }
 
@@ -224,14 +231,16 @@ Vector<T>& Vector<T>::operator=(const Vector<T> &other){
         data_ = new T[capacity_];
     }
     size_ = other.size_;
-    std::memcpy(data_, other.data_, size_*sizeof(T));
+    for(size_t i=0; i < size_; i++)
+        data_[i] = other.data_[i];
     return *this;
 }
 
 template<typename T>
 Vector<T> Vector<T>::operator+(const T &value) const{
     Vector tmp(size_ + 1);
-    std::memcpy(tmp.data_, data_, size_*sizeof(T));
+    for(size_t i=0; i<size_; i++)
+        tmp.data_[i] = data_[i];
     tmp.size_ = size_+1;
     tmp.data_[size_] = value;
     return tmp;
@@ -241,7 +250,8 @@ template<typename T>
 Vector<T>& Vector<T>::operator+=(const T &value){
     if (size_ == capacity_){
         T* data = new T[capacity_ + 10];
-        std::memcpy(data, data_, size_*sizeof(T));
+        for(size_t i=0; i<size_; i++)
+            data[i] = data_[i];
         delete[] data_;
         data_ = data;
     }
@@ -267,8 +277,10 @@ template<typename T>
 Vector<T> Vector<T>::operator+(const Vector &other) const{
     Vector tmp(size_ + other.size_);
     tmp.size_ = size_ + other.size_;
-    std::memcpy(tmp.data_, data_, size_*sizeof(T));
-    std::memcpy(&tmp.data_[size_], other.data_, other.size_*sizeof(T));
+    for(size_t i=0; i<size_; i++)
+        data_[i] = other.data_[i];
+    for(size_t i=size_, j=0; j<other.size_; i++, j++)
+        data_[i] = other.data_[j];
     return tmp;
 }
 
@@ -277,11 +289,13 @@ Vector<T>& Vector<T>::operator+=(const Vector &other){
     if (capacity_ < size_ + other.size_){
         capacity_ = size_ + other.size_;
         T *data = new T[capacity_];
-        std::memcpy(data, data_, size_);
+        for(size_t i=0; i<size_; i++)
+            data[i] = data_[i];
         delete[] data_;
         data_ = data;
     }
-    std::memcpy(&data_[size_], other.data_, other.size_*sizeof(T));
+    for(size_t i=size_, j=0; j<other.size_; i++, j++)
+        data_[i] = other.data_[j];
     size_ += other.size_;
     return *this;
 }
