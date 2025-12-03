@@ -2,8 +2,23 @@
 #include "booleanmatrix.hpp"
 
 int main(){
+    // BooleanVector vec("111");
+    // std::cin >> vec[1];
+
     const char* data[] = {"101", "010"};
     BooleanMatrix mat(data, 2), mat2(data, 2), mat3;
+    bool flag = false;
+    std::cout << "type 1 if need input matrix, 0 if no: ";
+    std::cin >> flag;
+    if (flag){
+        std::cout << "mat 2X3:" << std::endl;
+        std::cin >> mat;
+        std::cout << "mat2 2X3:" << std::endl;
+        std::cin >> mat2;
+        std::cout << std::endl;
+    }
+    
+
     std::cout << mat;
     std::cout << "mat.columns()" << std::endl;
     std::cout << mat.columns() << std::endl;
@@ -13,9 +28,9 @@ int main(){
     std::cout << mat.weight() << std::endl;
     std::cout << "mat.weight(0)" << std::endl;
     std::cout << mat.weight(0) << std::endl;
-    std::cout << "mat.conjunction" << std::endl;
+    std::cout << "mat.conjunction()" << std::endl;
     std::cout << mat.conjunction() << std::endl;
-    std::cout << "mat.disjunction" << std::endl;
+    std::cout << "mat.disjunction()" << std::endl;
     std::cout << mat.disjunction() << std::endl;
     std::cout << "mat.invert(0, 1)" << std::endl;
     mat.invert(0, 1);

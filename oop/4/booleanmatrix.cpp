@@ -1,6 +1,7 @@
 #include <cassert>
 #include <utility>
 #include "booleanmatrix.hpp"
+#include "booleanvector.hpp"
 
 BooleanMatrix::BooleanMatrix(): data_(), rows_(0), columns_(0) {}
 
@@ -148,9 +149,11 @@ std::ostream & operator << (std::ostream &cout, const BooleanMatrix &mat){
         cout << mat[i] << std::endl;
     return cout;
 }
-std::istream & operator >> (std::istream &cin, BooleanMatrix &mat){
-    
 
+
+std::istream & operator >> (std::istream &cin, BooleanMatrix &mat){
+    for(size_t i=0; i < mat.rows(); i++)
+        cin >> mat[i];
     return cin;
 }
 

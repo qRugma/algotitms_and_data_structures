@@ -6,15 +6,15 @@ class BooleanVector{
 
     uint8_t *data_ = nullptr;
     uint32_t numBits_ = 0;
-    class Component;
-    class Component_const;
-
+    
     uint32_t getByteIndex(uint32_t bit) const;
     uint32_t getBitIndex(uint32_t bit) const;
     uint32_t getNumBytes() const;
-
+    
     
     public:
+    class Component;
+    class Component_const;
     BooleanVector();
     BooleanVector(const uint32_t, const bool);
     BooleanVector(const char*);
@@ -50,6 +50,7 @@ class BooleanVector{
     BooleanVector operator~() const;
 };
 
+std::istream & operator >> (std::istream &cin, BooleanVector::Component &comp);
 std::ostream & operator << (std::ostream &cout, const BooleanVector &vec);
 std::istream & operator >> (std::istream &cin, BooleanVector &vec);
 
