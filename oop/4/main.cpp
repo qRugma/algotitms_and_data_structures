@@ -25,24 +25,24 @@ int main() {
     std::cout << mat.rows() << std::endl;
     std::cout << "mat.weight()" << std::endl;
     std::cout << mat.weight() << std::endl;
-    std::cout << "mat.weight(0)" << std::endl;
+    std::cout << "mat.weight(row: 0)" << std::endl;
     std::cout << mat.weight(0) << std::endl;
     std::cout << "mat.conjunction()" << std::endl;
     std::cout << mat.conjunction() << std::endl;
     std::cout << "mat.disjunction()" << std::endl;
     std::cout << mat.disjunction() << std::endl;
-    std::cout << "mat.invert(0, 1)" << std::endl;
+    std::cout << "mat.invert(row: 0, column: 1)" << std::endl;
     mat.invert(0, 1);
     std::cout << mat << std::endl;
-    std::cout << "mat.invert(1, 0, 3)" << std::endl;
+    std::cout << "mat.invert(row: 1, column: 0, k: 3)" << std::endl;
     mat.invert_k(1, 0, 3);
     std::cout << mat << std::endl;
 
-    std::cout << "mat.set(0, 1, 0)" << std::endl;
+    std::cout << "mat.set(row: 0, column: 1, value: 0)" << std::endl;
     mat.set(0, 1, 0);
     std::cout << mat << std::endl;
 
-    std::cout << "mat.set_k(1, 0, 1, 3)" << std::endl;
+    std::cout << "mat.set_k(row: 1, column: 0, value: 1, k: 3)" << std::endl;
     mat.set_k(1, 0, 1, 3);
     std::cout << mat << std::endl;
 
