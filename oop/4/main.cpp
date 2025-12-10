@@ -11,9 +11,9 @@ int main() {
     std::cout << "type 1 if need input matrix, 0 if no: ";
     std::cin >> flag;
     if (flag) {
-        std::cout << "mat 2X3:" << std::endl;
+        std::cout << "mat: " << std::endl;
         std::cin >> mat;
-        std::cout << "mat2 2X3:" << std::endl;
+        std::cout << "mat2: " << std::endl;
         std::cin >> mat2;
         std::cout << std::endl;
     }

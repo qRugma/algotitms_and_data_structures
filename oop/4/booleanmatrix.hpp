@@ -42,5 +42,5 @@ class BooleanMatrix {
 
 };
 
-std::ostream &operator<<(std::ostream &cout, const BooleanMatrix &mat);
 std::istream &operator>>(std::istream &cin, BooleanMatrix &mat);
+std::ostream &operator<<(std::ostream &cout, const BooleanMatrix &mat);

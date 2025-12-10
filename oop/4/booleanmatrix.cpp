@@ -173,6 +173,9 @@ std::ostream &operator<<(std::ostream &cout, const BooleanMatrix &mat) {
 }
 
 std::istream &operator>>(std::istream &cin, BooleanMatrix &mat) {
+    size_t rows, columns;
+    cin >> rows >> columns;
+    mat = BooleanMatrix(columns, rows);
     for (size_t i = 0; i < mat.rows(); i++)
         cin >> mat[i];
     return cin;
