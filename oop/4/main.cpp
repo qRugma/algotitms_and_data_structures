@@ -1,23 +1,22 @@
-#include <iostream>
 #include "booleanmatrix.hpp"
+#include <iostream>
 
-int main(){
+int main() {
     // BooleanVector vec("111");
     // std::cin >> vec[1];
 
-    const char* data[] = {"101", "010"};
+    const char *data[] = {"101", "010"};
     BooleanMatrix mat(data, 2), mat2(data, 2), mat3;
     bool flag = false;
     std::cout << "type 1 if need input matrix, 0 if no: ";
     std::cin >> flag;
-    if (flag){
+    if (flag) {
         std::cout << "mat 2X3:" << std::endl;
         std::cin >> mat;
         std::cout << "mat2 2X3:" << std::endl;
         std::cin >> mat2;
         std::cout << std::endl;
     }
-    
 
     std::cout << mat;
     std::cout << "mat.columns()" << std::endl;
@@ -38,11 +37,11 @@ int main(){
     std::cout << "mat.invert(1, 0, 3)" << std::endl;
     mat.invert_k(1, 0, 3);
     std::cout << mat << std::endl;
-    
+
     std::cout << "mat.set(0, 1, 0)" << std::endl;
     mat.set(0, 1, 0);
     std::cout << mat << std::endl;
-    
+
     std::cout << "mat.set_k(1, 0, 1, 3)" << std::endl;
     mat.set_k(1, 0, 1, 3);
     std::cout << mat << std::endl;
@@ -67,6 +66,4 @@ int main(){
     std::cout << "mat.swap(mat2)" << std::endl;
     mat.swap(mat2);
     std::cout << mat << std::endl;
-
-
 }
