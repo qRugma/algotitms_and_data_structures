@@ -66,4 +66,13 @@ int main() {
     std::cout << "mat.swap(mat2)" << std::endl;
     mat.swap(mat2);
     std::cout << mat << std::endl;
-}
+    std::cout << "mat.swap_rows(0, 1)" << std::endl;
+    mat.swap_rows(0, 1);
+    std::cout << mat << std::endl;
+    
+    std::cout << "mat.swap_columns(1, 2)" << std::endl;
+    mat.swap_columns(1, 2);
+    std::cout << mat << std::endl;
+
+
+}   

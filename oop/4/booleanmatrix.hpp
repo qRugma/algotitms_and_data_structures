@@ -35,6 +35,11 @@ class BooleanMatrix {
     BooleanMatrix operator^(const BooleanMatrix &) const;
     BooleanMatrix &operator^=(const BooleanMatrix &);
     BooleanMatrix operator~() const;
+
+    void swap_rows(size_t row1, size_t row2);
+    void swap_columns(size_t column1, size_t column2);
+
+
 };
 
 std::ostream &operator<<(std::ostream &cout, const BooleanMatrix &mat);

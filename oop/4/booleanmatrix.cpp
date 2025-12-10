@@ -151,6 +151,21 @@ BooleanMatrix BooleanMatrix::operator~() const {
     return tmp;
 }
 
+void BooleanMatrix::swap_rows(size_t row1, size_t row2) {
+    assert(row1 < rows_); assert(row2 < rows_);
+    data_[row1].swap(data_[row2]);
+}
+
+void BooleanMatrix::swap_columns(size_t column1, size_t column2) {
+    assert(column1 < columns_); assert(column2 < columns_);
+    for(size_t row=0; row < rows_; row++){
+        bool value = data_[row][column1];
+        set(row, column1, data_[row][column2]);
+        set(row, column2, value);
+    }
+
+}
+
 std::ostream &operator<<(std::ostream &cout, const BooleanMatrix &mat) {
     for (size_t i = 0; i < mat.rows(); i++)
         cout << mat[i] << std::endl;

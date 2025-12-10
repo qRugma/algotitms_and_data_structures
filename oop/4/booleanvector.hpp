@@ -28,7 +28,7 @@ class BooleanVector {
 
     uint32_t getLenght() const;
     uint32_t getWeight() const;
-    void swap(BooleanVector);
+    void swap(BooleanVector&);
     void invert_all();
     void invert(const uint32_t index);
     void set_value(bool value, uint32_t index);

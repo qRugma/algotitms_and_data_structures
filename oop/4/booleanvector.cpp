@@ -100,7 +100,7 @@ uint32_t BooleanVector::getWeight() const {
     return weight;
 }
 
-void BooleanVector::swap(BooleanVector other) {
+void BooleanVector::swap(BooleanVector &other) {
     uint8_t *data = data_;
     uint32_t numBits = numBits_;
     data_ = other.data_;
