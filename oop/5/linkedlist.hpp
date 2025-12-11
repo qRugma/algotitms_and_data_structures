@@ -49,8 +49,12 @@ class LinkedList {
     T erase(iterator start, iterator end);
     template <typename Predicate>
     T erase_if(Predicate &&predicateObj);
+    template <typename Predicate>
+    T erase_if_all(Predicate &&predicateObj);
     iterator max();
     iterator min();
+    template <typename Predicate>
+    void for_each(Predicate &&predicateObj);
 
     bool empty();
     void clean();
