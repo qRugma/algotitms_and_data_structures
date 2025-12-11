@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-class Set : private BooleanVector {
+class Set :  BooleanVector {
 
     Set(BooleanVector&&);
   public:
@@ -32,6 +32,8 @@ class Set : private BooleanVector {
     Set operator-(char) const;
     Set& operator-=(char);
 
+    virtual void input();
+    virtual void output() const;
 };
 
 std::istream& operator>>(std::istream &cin, Set& set);

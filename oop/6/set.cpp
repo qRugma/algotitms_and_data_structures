@@ -119,3 +119,11 @@ std::ostream &operator<<(std::ostream &cout, const Set &set) {
     }
     return cout;
 }
+
+void Set::input(){
+    std::cin >> *this;
+}
+
+void Set::output() const{
+    std::cout << *this;
+}

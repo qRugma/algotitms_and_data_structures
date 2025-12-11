@@ -37,4 +37,14 @@ int main(){
     std::cout << "a.includes(a): "<< a.includes('a') << std::endl;
     std::cout << "~a" << std::endl;
     std::cout << ~a << std::endl;
+
+    BooleanVector bol = "01010100101", *ptr;
+
+    ptr = &bol;
+    ptr->output();
+    std::cout << std::endl;
+    ptr = (BooleanVector*) &a;
+    ptr->output();
+    std::cout << std::endl;
+
 }
