@@ -39,6 +39,7 @@ class BooleanMatrix {
     void swap_rows(size_t row1, size_t row2);
     void swap_columns(size_t column1, size_t column2);
 
+    bool connected(size_t X, size_t Y);
 
 };
 

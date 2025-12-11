@@ -75,4 +75,11 @@ int main() {
     std::cout << mat << std::endl;
 
 
-}   
+
+    const char *data2[] = {"011", "000", "000"};
+    BooleanMatrix SMEH(data2, 3);
+
+    std::cout << "0 in 2: "<< SMEH.connected(0, 2) << std::endl;
+    std::cout << "2 in 0: "<< SMEH.connected(2, 0) << std::endl;
+
+}

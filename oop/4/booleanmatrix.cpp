@@ -180,3 +180,9 @@ std::istream &operator>>(std::istream &cin, BooleanMatrix &mat) {
         cin >> mat[i];
     return cin;
 }
+
+
+
+bool BooleanMatrix::connected(size_t X, size_t Y){
+    return (*this)[X][Y];
+}
