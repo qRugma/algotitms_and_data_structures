@@ -298,9 +298,11 @@ BooleanVector::Component_const::operator bool(){
 }
 
 void BooleanVector::input(){
+    std::cout << "BOOLEANVECTOR_INPUT" << std::endl;
     std::cin >> *this;
 }
 
 void BooleanVector::output() const{
+    std::cout << "BOOLEANVECTOR_OUTPUT" << std::endl;
     std::cout << *this;
 }

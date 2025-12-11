@@ -121,9 +121,11 @@ std::ostream &operator<<(std::ostream &cout, const Set &set) {
 }
 
 void Set::input(){
+    std::cout << "SET_INPUT" << std::endl;
     std::cin >> *this;
 }
 
 void Set::output() const{
+    std::cout << "SET_OUTPUT" << std::endl;
     std::cout << *this;
 }
