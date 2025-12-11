@@ -106,7 +106,7 @@ Set &Set::operator-=(char item) {
 
 std::istream &operator>>(std::istream &cin, Set &set) {
     std::string str;
-    cin >> str;
+    std::getline(cin, str);
     for(char i : str)
         set += i;
     return cin;

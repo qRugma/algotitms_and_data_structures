@@ -1,5 +1,4 @@
-#include "booleanvector.cpp"
-#include "set.cpp"
+#include "set.hpp"
 #include <iostream>
 
 int main(){
