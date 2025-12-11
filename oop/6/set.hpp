@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-class Set : BooleanVector {
+class Set : private BooleanVector {
 
     Set(BooleanVector&&);
   public:

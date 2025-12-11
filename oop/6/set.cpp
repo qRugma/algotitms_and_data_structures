@@ -1,9 +1,13 @@
 #include "set.hpp"
+#include <string>
+
+const int SIZE = 128;
+
 
 Set::Set(BooleanVector&& vec) : BooleanVector(vec) {}
-Set::Set() : BooleanVector(256,0) {}
+Set::Set() : BooleanVector(SIZE,0) {}
 
-Set::Set(const char *str) : BooleanVector(256, 0){
+Set::Set(const char *str) : BooleanVector(SIZE, 0){
     for(const char *i=str; *i!='\0'; i++)
         this->set_value(1, *i);
 }
@@ -15,7 +19,7 @@ bool Set::includes(unsigned char item) const{
 }
 
 char Set::max() const{
-    for(size_t i = 255; i>=0; i--)
+    for(size_t i = SIZE-1; i>=0; i--)
         if (BooleanVector::operator[](i))
             return i;
     return 0;
@@ -66,7 +70,7 @@ Set &Set::operator&=(const Set &other) {
 }
 
 Set Set::operator/(const Set &other) const{
-    return BooleanVector::operator^(other);
+    return BooleanVector::operator^(other&*this);
 }
 
 Set &Set::operator/=(const Set &other) {
@@ -100,8 +104,16 @@ Set &Set::operator-=(char item) {
     return *this;
 }
 
+std::istream &operator>>(std::istream &cin, Set &set) {
+    std::string str;
+    cin >> str;
+    for(char i : str)
+        set += i;
+    return cin;
+}
+
 std::ostream &operator<<(std::ostream &cout, const Set &set) {
-    for(int i=0; i<256; i++){
+    for(int i=0; i<SIZE; i++){
         if (set.includes(i))
             cout << (char) i;
     }

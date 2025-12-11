@@ -3,6 +3,36 @@
 #include <iostream>
 
 int main(){
-    Set a("asd");
-    std::cout << a;
+    Set a("asd"), b("52"), c("ascv");
+    std::cin >> a;
+    std::cout << a << std::endl;
+    std::cout << "weight: " << a.weight() << std::endl;
+    a += 'O';
+    std::cout << a << std::endl;
+    std::cout << "weight: " << a.weight() << std::endl;
+    a -= 'O';
+    std::cout << a << std::endl;
+    std::cout << "a: " << a << std::endl;
+    std::cout << "b: " << b << std::endl;
+    std::cout << "c: " << c << std::endl;
+    std::cout << "a|b" << std::endl;
+    std::cout << (a|b) << std::endl;
+    std::cout << "a/c" << std::endl;
+    std::cout << (a/c) << std::endl;
+    std::cout << "c/a" << std::endl;
+    std::cout << (c/a) << std::endl;
+    std::cout << "a&c" << std::endl;
+    std::cout << (a&c) << std::endl;
+    // std::cout << ~a << std::endl;
+    b = a;
+    Set h = c;
+    std::cout << "h!=c" << std::endl;
+    std::cout << (h!=c) << std::endl;
+    std::cout << "a==b" << std::endl;
+    std::cout << (a==b) << std::endl;
+    std::cout << "a==c" << std::endl;
+    std::cout << (a==c) << std::endl;
+    std::cout << "a max: "<< a.max() << std::endl; 
+    std::cout << "a min: "<< a.min() << std::endl;
+    std::cout << "a.includes(a): "<< a.includes('a') << std::endl;
 }
