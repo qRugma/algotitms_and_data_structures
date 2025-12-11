@@ -74,7 +74,7 @@ Set Set::operator/(const Set &other) const{
 }
 
 Set &Set::operator/=(const Set &other) {
-    BooleanVector::operator^=(other);
+    BooleanVector::operator^=(other&*this);
     return *this;
 }
 
