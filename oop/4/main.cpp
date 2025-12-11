@@ -1,4 +1,5 @@
 #include "booleanmatrix.hpp"
+// #include "booleanvector.cpp"
 #include <iostream>
 
 int main() {
@@ -76,10 +77,21 @@ int main() {
 
 
 
-    const char *data2[] = {"011", "000", "000"};
+    const char *data2[] = {
+        "0100",
+        "1010",
+        "0100",
+        "1110"
+    };
     BooleanMatrix SMEH(data2, 3);
 
     std::cout << "0 in 2: "<< SMEH.connected(0, 2) << std::endl;
     std::cout << "2 in 0: "<< SMEH.connected(2, 0) << std::endl;
+    std::cout << "0 in 3: "<< SMEH.connected(0, 3) << std::endl;
 
+    while(true){
+        int x, y;
+        std::cin >> x >> y;
+        std::cout << x << " in " << y << ": " << std::boolalpha << SMEH.connected(x, y) << std::endl;
+    }
 }
