@@ -296,3 +296,13 @@ BooleanVector::Component_const::Component_const(uint8_t* const bytePtr, const ui
 BooleanVector::Component_const::operator bool(){
     return *bytePtr_ & (1 << bitIndex_);
 }
+
+void BooleanVector::input(){
+    std::cout << "BOOLEANVECTOR_INPUT" << std::endl;
+    std::cin >> *this;
+}
+
+void BooleanVector::output() const{
+    std::cout << "BOOLEANVECTOR_OUTPUT" << std::endl;
+    std::cout << *this;
+}

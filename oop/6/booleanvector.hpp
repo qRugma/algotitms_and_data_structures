@@ -49,6 +49,10 @@ class BooleanVector{
     BooleanVector operator>>(int value) const;
     BooleanVector& operator>>=(int value);
     BooleanVector operator~() const;
+
+    virtual void input();
+    virtual void output() const;
+
 };
 
 std::ostream & operator << (std::ostream &cout, const BooleanVector &vec);

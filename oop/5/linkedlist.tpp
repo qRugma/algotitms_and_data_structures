@@ -246,6 +246,18 @@ T LinkedList<T>::erase_if(Predicate &&predicateObj) {
 }
 
 template <typename T>
+template <typename Predicate>
+T LinkedList<T>::erase_if_all(Predicate &&predicateObj) {
+    assert(!empty());
+    T value;
+    for (ListNode *it = frontptr_; it != nullptr; it = it->Next())
+        if (predicateObj(it->Value()))
+            value = erase(iterator(it));
+    return value;
+}
+
+
+template <typename T>
 typename LinkedList<T>::iterator LinkedList<T>::max() {
     assert(!empty());
     iterator res = begin();
@@ -266,6 +278,15 @@ typename LinkedList<T>::iterator LinkedList<T>::min() {
     }
     return res;
 }
+
+template <typename T>
+template <typename Predicate>
+void LinkedList<T>::for_each(Predicate &&predicateObj) {
+    for(T& i : *this)
+        predicateObj(i);
+}
+
+
 
 template <typename T>
 bool LinkedList<T>::empty() {

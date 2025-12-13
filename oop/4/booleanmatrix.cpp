@@ -180,3 +180,22 @@ std::istream &operator>>(std::istream &cin, BooleanMatrix &mat) {
         cin >> mat[i];
     return cin;
 }
+
+
+bool DFS(BooleanMatrix& graph, size_t ver, BooleanVector& used, size_t search){
+    used[ver] = true;
+    for(size_t i=0; i < graph.columns(); i++){
+        if (!used[i] and graph[ver][i]){
+            if (i == search)
+                return true;
+            if (DFS(graph, i, used, search))
+                return true;
+        }
+    }
+    return false;
+}
+
+bool BooleanMatrix::connected(size_t X, size_t Y){
+    BooleanVector used(columns_, 0);
+    return DFS(*this, X, used, Y);
+}

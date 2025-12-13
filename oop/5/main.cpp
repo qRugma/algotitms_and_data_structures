@@ -5,6 +5,8 @@ bool predicate(int value) { return value < 25; }
 
 bool predicate2(int value) { return value == 25; }
 
+void predicate3(int &value) { value += 1; }
+
 int main() {
     LinkedList<int> list;
     list.push_front(10);
@@ -62,4 +64,10 @@ int main() {
     list.swap(tmp);
     std::cout << "list.swap(tmp): " << list << std::endl;
     std::cout << "list[4]: " << list[4] << std::endl;
+
+    list.for_each(predicate3);
+    std::cout << list << std::endl;
+
+    list.erase_if_all(predicate);
+    std::cout << list << std::endl;
 }
