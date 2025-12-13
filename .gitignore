@@ -50,4 +50,4 @@ testing
 # data files
 *.txt
 
-/oop/7/build/
+./oop/7/build/*
