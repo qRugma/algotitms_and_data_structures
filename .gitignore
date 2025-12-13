@@ -49,3 +49,5 @@ testing
 
 # data files
 *.txt
+
+*/build
