@@ -31,14 +31,14 @@ void callButtonLineLabel(QGridLayout *layout, int row, const QString &bText, Mai
     QGridLayout *innerGridLayout = new QGridLayout();
     QWidget *innerWidget = new QWidget();
     innerWidget->setLayout(innerGridLayout);
-
     QPushButton *button = new QPushButton(bText);
     QLineEdit *line = new QLineEdit();
+    // innerGridLayout->setContentsMargins(0, 0, 0, 0);
     line->setMaxLength(1);
     line->setMaximumWidth(70);
     QLabel *label = new QLabel();
 
-    layout->addWidget(button, row, 0); 
+    layout->addWidget(button, row, 0);
     layout->addWidget(innerWidget, row, 1);
     innerGridLayout->addWidget(line, 0, 0);
     innerGridLayout->addWidget(label, 0, 1);

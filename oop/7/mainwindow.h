@@ -22,4 +22,5 @@ class MainWindow : public QMainWindow
         QGridLayout *gridLayout;
         Set* set;
         Set* set2;
+        Set* setSelected;
 };
