@@ -3,6 +3,7 @@
 
 class QLabel;
 class QPushButton;
+class QString;
 class Set;
 
 class ButtonClickHandler : public QObject
@@ -17,6 +18,10 @@ class ButtonClickHandler : public QObject
     public slots:
 
         void onButtonClicked(bool);
+
+    signals:
+
+        void clicked(QString);
 
     private:
 

@@ -1,8 +1,9 @@
 #include <QMainWindow>
 
-#include "set.hpp"
+// #include "set.hpp"
 
-class ButtonClickHandler;
+class Set;
+
 
 class QGridLayout;
 
@@ -15,16 +16,10 @@ class MainWindow : public QMainWindow
         MainWindow(QWidget* = nullptr);
         ~MainWindow();
 
-        void setAppendValue(char value){
-            appendValue = value;
-        }
-
     public:
 
         QWidget *widget;
         QGridLayout *gridLayout;
-        ButtonClickHandler *buttonClickHandlers[10];
-        Set set;
-        char appendValue;
-        char popValue;
+        Set* set;
+        Set* set2;
 };
