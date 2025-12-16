@@ -1,204 +1,96 @@
 #include "mainwindow.h"
 
 #include "set.hpp"
-#include "constructors.hpp"
+// #include "constructors.hpp"
+#include "setcolumn.hpp"
 
 #include <utility>
 
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent){
     
-    set = new Set("asd");
-    set2 = new Set("pas");
-    setSelected = set2;
+    sets.push_back(new Set(""));
+    setSelected = sets.front();
     setWindowTitle("Qt GUI Application Example");
     resize(960, 720);
     
-    
+    boxLayout = new QHBoxLayout();
+    QWidget *innerWidget = new QWidget();
+    innerWidget->setLayout(boxLayout);
+
     gridLayout = new QGridLayout();
     widget = new QWidget();
     widget->setLayout(gridLayout);
     
     setCentralWidget(widget);
-    { //set column
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("Print"),
-            this,
-            [](MainWindow* This, QLabel *label){
-                label->setText(QString::fromStdString(This->set->output()));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("Print~"),
-            this,
-            [](MainWindow* This, QLabel *label){
-                label->setText(QString::fromStdString(This->set->operator~().output()));
-            }
-        );
-        
-        callButtonLine(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("+="),
-            this,
-            [](MainWindow* This, QLineEdit *line){
-                QString text = line->text();
-                if (text.size()==1)
-                    *(This->set)+=text[0].toLatin1();
-            }
-        );
-        callButtonLine(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("-="),
-            this,
-            [](MainWindow *This, QLineEdit *line){
-                QString text = line->text();
-                if (text.size()==1)
-                    *(This->set)-=text[0].toLatin1();
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set=setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator=(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set/setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator/(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set/=setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator/=(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set&setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator&(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set&=setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator&=(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set|setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator|(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set|=setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(QString::fromStdString(
-                    (This->set->operator|=(*This->setSelected)).output()
-                ));
-            }
-        );
-        callButtonLineLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            "Includes",
-            this,
-            [](MainWindow *This, QLineEdit *line, QLabel *label){
-                QString text = line->text();
-                if (text.size() == 1)
-                    label->setText(This->set->includes(text[0].toLatin1()) ? "true" : "false");
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set==setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(
-                    (This->set->operator==(*This->setSelected)) ? "true" : "false"
-                );
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("set!=setSelected"),
-            this,
-            [](MainWindow *This, QLabel *label){
-                label->setText(
-                    (This->set->operator!=(*This->setSelected)) ? "true" : "false"
-                );
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("Max"),
-            this,
-            [](MainWindow* This, QLabel *label){
-                label->setText(QChar::fromLatin1(This->set->max()));
-            }
-        );
-        callButtonLabel(
-            gridLayout,
-            gridLayout->rowCount(),
-            QString("Min"),
-            this,
-            [](MainWindow* This, QLabel *label){
-                label->setText(QChar::fromLatin1(This->set->min()));
-            }
-        );
-    }
+
+    QPushButton *create = new QPushButton("Create");
+
+    gridLayout->addWidget(create);
+    gridLayout->addWidget(innerWidget);
+    QObject::connect(
+        create,
+        &QPushButton::clicked,
+        this,
+        MainWindow::createColumn
+    );
+
+    createColumn();
+    createColumn();
 }
 
-MainWindow::~MainWindow()
-{
-    delete set;
-    delete set2;
+MainWindow::~MainWindow(){
+    for(auto set : sets)
+        delete set;
 };
+
+
+SetColumnBox* MainWindow::createColumn(){
+    sets.push_back(new Set(""));
+    columns.push_back(new SetColumnBox(sets.back(), setSelected));
+    QObject::connect(
+        this,
+        &MainWindow::select,
+        columns.back(),
+        SetColumnBox::newSelected
+    );
+    QObject::connect(
+        columns.back(),
+        &SetColumnBox::SelectedChange,
+        this,
+        MainWindow::newSelected
+    );
+    QObject::connect(
+        columns.back(),
+        &SetColumnBox::deleted,
+        this,
+        MainWindow::columnDelete
+    );
+    std::cout << columns.size() << std::endl;
+    boxLayout->addWidget(columns.back());
+    return columns.back();
+}
+
+void MainWindow::columnDelete(SetColumnBox *deleted){
+    auto itS = sets.begin()++;
+    for(auto it= columns.begin(); it != columns.end(); it++, itS++)
+        if (*it == deleted){
+            delete *it;
+            columns.erase(it);
+            if (*itS == setSelected)
+                newSelected(sets.front());
+            delete *itS;
+            sets.erase(itS);
+            return;
+        }
+}
+
+void MainWindow::newSelected(Set * setSelect_){
+    setSelected = setSelect_;
+    emit(this->select(setSelected));
+}

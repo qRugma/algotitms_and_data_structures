@@ -1,17 +1,74 @@
-class MainWindow;
+class SetColumnBox;
 class QLabel;
 class QGridLayout;
 class QString;
 class QLineEdit;
 
-using funcT1 = void(*)(MainWindow*, QLabel*);
+#include <QWidget>
+class QHBoxLayout;
+class QPushButton;
 
-void callButtonLabel(QGridLayout *layout, int row, const QString &bText, MainWindow* context, funcT1 &&func);
 
-using funcT2 = void(*)(MainWindow*, QLineEdit*);
 
-void callButtonLine(QGridLayout *layout, int row, const QString &bText, MainWindow* context, funcT2 &&func);
+using funcT1 = void(*)(SetColumnBox*, QLabel*);
 
-using funcT3 = void(*)(MainWindow*, QLineEdit*, QLabel*);
+void callButtonLabel(QGridLayout *layout, int row, const QString &bText, SetColumnBox* context, funcT1 &&func);
 
-void callButtonLineLabel(QGridLayout *layout, int row, const QString &bText, MainWindow* context, funcT3 &&func);
+using funcT2 = void(*)(SetColumnBox*, QLineEdit*);
+
+void callButtonLine(QGridLayout *layout, int row, const QString &bText, SetColumnBox* context, funcT2 &&func);
+
+using funcT3 = void(*)(SetColumnBox*, QLineEdit*, QLabel*);
+
+void callButtonLineLabel(QGridLayout *layout, int row, const QString &bText, SetColumnBox* context, funcT3 &&func);
+
+
+
+class CallButtonLabelBox : public QWidget{
+    Q_OBJECT;
+
+    public:
+
+    CallButtonLabelBox(const QString &bText, SetColumnBox* context, funcT1 &&func);
+
+    public:
+
+    QPushButton *button;
+    QHBoxLayout *layout;
+    QLabel *label;
+    funcT1 func1;
+
+};
+
+
+class CallButtonLineBox : public QWidget{
+    Q_OBJECT;
+
+    public:
+
+    CallButtonLineBox(const QString &bText, SetColumnBox* context, funcT2 &&func);
+    
+    public:
+
+    QPushButton *button;
+    QHBoxLayout *layout;
+    QLineEdit *line;
+    funcT2 func2;
+
+};
+
+
+class callButtonLineLabelBox : public QWidget{
+    Q_OBJECT;
+
+    public:
+
+    callButtonLineLabelBox(const QString &bText, SetColumnBox* context, funcT3 &&func);
+
+    public:
+    QHBoxLayout *layout;
+    QPushButton *button;
+    QLabel *label;
+    QLineEdit *line;
+    funcT3 func3;
+};

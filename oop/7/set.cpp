@@ -126,10 +126,15 @@ std::string Set::input(){
 }
 
 std::string Set::output() const{
-    std::cout << *this;
+    // std::cout << *this;
     std::string str;
 
-    for(int i=0; i<SIZE; i++)
+    // for(int i=0; i<SIZE; i++)
+    //     if (includes(i))
+    //         str += (char) i;
+    
+    // version for QT
+    for(int i=32; i<SIZE-1; i++)
         if (includes(i))
             str += (char) i;
 
