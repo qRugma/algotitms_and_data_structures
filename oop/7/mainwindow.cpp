@@ -1,16 +1,12 @@
 #include "mainwindow.h"
 
 #include "set.hpp"
-// #include "constructors.hpp"
 #include "setcolumn.hpp"
 
-#include <utility>
 
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include <QLabel>
-#include <QLineEdit>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent){
     
@@ -71,13 +67,12 @@ SetColumnBox* MainWindow::createColumn(){
         this,
         MainWindow::columnDelete
     );
-    std::cout << columns.size() << std::endl;
     boxLayout->addWidget(columns.back());
     return columns.back();
 }
 
 void MainWindow::columnDelete(SetColumnBox *deleted){
-    auto itS = sets.begin()++;
+    auto itS = ++sets.begin();
     for(auto it= columns.begin(); it != columns.end(); it++, itS++)
         if (*it == deleted){
             delete *it;

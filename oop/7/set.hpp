@@ -1,5 +1,5 @@
 #include "booleanvector.hpp"
-#include <iostream>
+// #include <iostream>
 #include <string>
 
 #pragma once
@@ -38,5 +38,5 @@ class Set :  BooleanVector {
     virtual std::string output() const;
 };
 
-std::istream& operator>>(std::istream &cin, Set& set);
-std::ostream& operator<<(std::ostream &cout, const Set& set);
+// std::istream& operator>>(std::istream &cin, Set& set);
+// std::ostream& operator<<(std::ostream &cout, const Set& set);

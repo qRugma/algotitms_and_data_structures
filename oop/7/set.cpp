@@ -104,24 +104,24 @@ Set &Set::operator-=(char item) {
     return *this;
 }
 
-std::istream &operator>>(std::istream &cin, Set &set) {
-    std::string str;
-    std::getline(cin, str);
-    for(char i : str)
-        set += i;
-    return cin;
-}
+// std::istream &operator>>(std::istream &cin, Set &set) {
+//     std::string str;
+//     std::getline(cin, str);
+//     for(char i : str)
+//         set += i;
+//     return cin;
+// }
 
-std::ostream &operator<<(std::ostream &cout, const Set &set) {
-    for(int i=0; i<SIZE; i++){
-        if (set.includes(i))
-            cout << (char) i;
-    }
-    return cout;
-}
+// std::ostream &operator<<(std::ostream &cout, const Set &set) {
+//     for(int i=0; i<SIZE; i++){
+//         if (set.includes(i))
+//             cout << (char) i;
+//     }
+//     return cout;
+// }
 
 std::string Set::input(){
-    std::cout << "SET_INPUT" << std::endl;
+    // std::cout << "SET_INPUT" << std::endl;
     std::cin >> *this;
 }
 

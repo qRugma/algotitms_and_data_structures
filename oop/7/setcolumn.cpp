@@ -97,7 +97,7 @@ SetColumnBox::SetColumnBox(Set *set_, Set *setSelected_){
         }
     ));
     layout->addWidget(new CallButtonLabelBox(
-        QString("set&setSelected"),
+        QString("set&&setSelected"),
         this,
         [](SetColumnBox *This, QLabel *label){
             label->setText(QString::fromStdString(
@@ -106,7 +106,7 @@ SetColumnBox::SetColumnBox(Set *set_, Set *setSelected_){
         }
     ));
     layout->addWidget(new CallButtonLabelBox(
-        QString("set&=setSelected"),
+        QString("set&&=setSelected"),
         this,
         [](SetColumnBox *This, QLabel *label){
             label->setText(QString::fromStdString(
