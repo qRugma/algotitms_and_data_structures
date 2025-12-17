@@ -173,6 +173,13 @@ SetColumnBox::SetColumnBox(Set *set_, Set *setSelected_){
             label->setText(QChar::fromLatin1(This->set->min()));
         }
     ));
+    layout->addWidget(new CallButtonLabelBox(
+        QString("Weight"),
+        this,
+        [](SetColumnBox* This, QLabel *label){
+            label->setText(QString::number(This->set->weight()));
+        }
+    ));
 
     this->setLayout(layout);
 }

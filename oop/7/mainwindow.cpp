@@ -3,7 +3,6 @@
 #include "set.hpp"
 #include "setcolumn.hpp"
 
-
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -71,6 +70,7 @@ SetColumnBox* MainWindow::createColumn(){
     return columns.back();
 }
 
+//slot
 void MainWindow::columnDelete(SetColumnBox *deleted){
     auto itS = ++sets.begin();
     for(auto it= columns.begin(); it != columns.end(); it++, itS++)
@@ -85,6 +85,7 @@ void MainWindow::columnDelete(SetColumnBox *deleted){
         }
 }
 
+//slot
 void MainWindow::newSelected(Set * setSelect_){
     setSelected = setSelect_;
     emit(this->select(setSelected));

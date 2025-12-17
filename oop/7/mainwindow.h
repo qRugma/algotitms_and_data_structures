@@ -31,6 +31,5 @@ class MainWindow : public QMainWindow
         QHBoxLayout *boxLayout;
         std::vector<Set*> sets;
         std::vector<SetColumnBox*> columns;
-        // Set* sets[10];
         Set* setSelected;
 };
