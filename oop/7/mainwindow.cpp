@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent){
         create,
         &QPushButton::clicked,
         this,
-        MainWindow::createColumn
+        &MainWindow::createColumn
     );
 
     createColumn();
@@ -52,19 +52,19 @@ SetColumnBox* MainWindow::createColumn(){
         this,
         &MainWindow::select,
         columns.back(),
-        SetColumnBox::newSelected
+        &SetColumnBox::newSelected
     );
     QObject::connect(
         columns.back(),
         &SetColumnBox::SelectedChange,
         this,
-        MainWindow::newSelected
+        &MainWindow::newSelected
     );
     QObject::connect(
         columns.back(),
         &SetColumnBox::deleted,
         this,
-        MainWindow::columnDelete
+        &MainWindow::columnDelete
     );
     boxLayout->addWidget(columns.back());
     return columns.back();

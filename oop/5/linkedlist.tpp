@@ -250,9 +250,13 @@ template <typename Predicate>
 T LinkedList<T>::erase_if_all(Predicate &&predicateObj) {
     assert(!empty());
     T value;
-    for (ListNode *it = frontptr_; it != nullptr; it = it->Next())
-        if (predicateObj(it->Value()))
-            value = erase(iterator(it));
+    ListNode *prev;
+    for (ListNode *it = frontptr_; it != nullptr;){
+        prev = it; it = it->Next();
+        if (predicateObj(prev->Value())){
+            value = erase(iterator(prev));
+        }
+    }
     return value;
 }
 
