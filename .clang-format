@@ -4,8 +4,16 @@ TabWidth: 4
 BreakTemplateDeclarations: Yes
 AlwaysBreakBeforeMultilineStrings: true
 BreakAfterReturnType: ExceptShortType
-
-
+ColumnLimit: 120
+PointerAlignment: Left
+ReferenceAlignment: Left
+AllowShortBlocksOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: true
+# AllowShortLoopsOnASingleLine: false
+IntegerLiteralSeparator:
+  Decimal: 3
+# DeriveReferenceAlignment: true
+# DerivePointerAlignment: true
 
 
 
@@ -13,12 +21,11 @@ BreakAfterReturnType: ExceptShortType
 
 
 # BraceWrapping: 
-#     BasedOnStyle: LLVM, 
+# BasedOnStyle: Microsoft 
 
 #     BreakBeforeBraces: Allman, 
 #     AllowShortIfStatementsOnASingleLine: false, 
 #     IndentCaseLabels: false, 
-#     ColumnLimit: 0, 
 #     AccessModifierOffset: -4, 
 #     NamespaceIndentation: All, 
 #     FixNamespaceComments: false
