@@ -3,6 +3,9 @@
 #include <fstream>
 #include <cstring>
 #include <chrono>
+#include <cmath>
+
+struct elem{int L, R, K;};
 
 void bitsort(int l, int r, int k, int *mas){
     if (l>=r or k < 0)
@@ -31,6 +34,41 @@ void bitsort(int mas[], int len){
     bitsort(i, len-1, 30, mas);    
 }
 
+void bitsortNotRecH(int mas[], int len){
+    int i = 0, j = len-1, mask = 1 << 31;
+    while (i <= j){
+        while (i <= j and (mas[i]&mask)) i++;
+        while (i <= j and !(mas[j]&mask)) j--;
+        if (i < j)
+            std::swap(mas[i++], mas[j--]);
+    }
+    int size = 33;
+    elem *S = new elem[size];
+    int P=1;
+    S[0].L=0; S[0].R=j; S[0].K=30;
+    S[1].L=i; S[1].R=len-1; S[1].K=30;
+    while(P>=0){
+        if (P>=size)
+            std::cout << "out of range" << std::endl;
+        int l = S[P].L, r = S[P].R, k = S[P].K; P--;
+        if (l>=r or k < 0)
+            continue;
+        i = l; j = r; mask = 1 << k;
+    
+        while (i <= j){
+            while (i <= j and !(mas[i]&mask)) i++;
+            while (i <= j and (mas[j]&mask)) j--;
+            if (i < j)
+                std::swap(mas[i++], mas[j--]);
+        }
+        P++; S[P].L = l; S[P].R = j; S[P].K = k-1;
+        P++; S[P].L = i; S[P].R = r; S[P].K = k-1;        
+    }
+}
+
+
+
+
 bool is_sorted(int* begin, int* end){
     begin++;
     for(; begin!=end; begin++)
@@ -43,7 +81,8 @@ int main(){
     std::ifstream fin;
     const int len = 10;
     int mas[] = {-2, 12, 5, 8, 1, -0, 0, -12, -5, -8};
-    bitsort(mas, len);
+    int mas2[] = {5, 4,3,2,1,0,-1,-2,-3,-4};
+    bitsortNotRecH(mas2, len);
     for(int i=0; i<len; i++)
         std::cout << mas[i] << " ";
     std::cout << std::endl;
@@ -63,7 +102,7 @@ int main(){
             for(int i = 0; i<3; i++){
                 std::memcpy(itermas, mas, size*sizeof(int));
                 std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
-                bitsort(mas, size);
+                bitsortNotRecH(mas, size);
                 std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double> duration = timeEnd - timeStart;
                 sumdur += duration.count();
