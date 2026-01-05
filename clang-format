@@ -1,0 +1,32 @@
+UseTab: Never
+IndentWidth: 4
+TabWidth: 4
+BreakTemplateDeclarations: Yes
+AlwaysBreakBeforeMultilineStrings: true
+BreakAfterReturnType: ExceptShortType
+ColumnLimit: 120
+PointerAlignment: Left
+ReferenceAlignment: Left
+AllowShortBlocksOnASingleLine: Empty
+AllowShortLoopsOnASingleLine: true
+# AllowShortLoopsOnASingleLine: false
+IntegerLiteralSeparator:
+  Decimal: 3
+# DeriveReferenceAlignment: true
+# DerivePointerAlignment: true
+
+
+
+
+
+
+# BraceWrapping: 
+# BasedOnStyle: Microsoft 
+
+#     BreakBeforeBraces: Allman, 
+#     AllowShortIfStatementsOnASingleLine: false, 
+#     IndentCaseLabels: false, 
+#     AccessModifierOffset: -4, 
+#     NamespaceIndentation: All, 
+#     FixNamespaceComments: false
+
