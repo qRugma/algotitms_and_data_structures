@@ -6,6 +6,9 @@
 #include <cmath>
 
 struct elem{int L, R, K;};
+#include <cmath>
+
+struct elem{int L, R, K;};
 
 void bitsort(int l, int r, int k, int *mas){
     if (l>=r or k < 0)
@@ -102,6 +105,7 @@ int main(){
             for(int i = 0; i<3; i++){
                 std::memcpy(itermas, mas, size*sizeof(int));
                 std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
+                bitsortNotRecH(mas, size);
                 bitsortNotRecH(mas, size);
                 std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
                 std::chrono::duration<double> duration = timeEnd - timeStart;
