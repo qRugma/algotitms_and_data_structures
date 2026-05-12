@@ -1,8 +1,12 @@
 #include <vector>
+#include <stack>
+#include <queue>
 
 class BinaryTree {  
   public:
     class TreeNode;
+    class IteratorInBreadth;
+    class IteratorLSR;
 
     BinaryTree() = default;
     // BinaryTree(); copy, move
@@ -33,6 +37,7 @@ class BinaryTree {
     std::vector<TreeNode*> getAllNodes() const;
 
   private:
+    class IteratorBase;
     TreeNode *root_ = nullptr;
 };
 
@@ -53,6 +58,29 @@ class  BinaryTree::TreeNode {
     void setLeftChild(TreeNode* const);
     TreeNode* getRightChild() const;
     void setRightChild(TreeNode* const);
+};
 
+class BinaryTree::IteratorBase {
+  public:  
+    IteratorBase(TreeNode *);
 
+    bool operator!=(const IteratorBase &) const;
+    bool operator==(const IteratorBase &) const;
+    // IteratorBase &operator++();
+    // IteratorBase operator++(int);
+    TreeNode* operator*();
+    const TreeNode* operator*() const;
+  protected:
+    TreeNode* node_;
+
+};
+
+class BinaryTree::IteratorInBreadth : public IteratorBase {  
+  
+  public:
+    std::queue<TreeNode*> Queue;
+    IteratorInBreadth(TreeNode *);
+    IteratorInBreadth &operator++();
+    IteratorInBreadth operator++(int);
+    static IteratorInBreadth getEnd(const TreeNode* root);
 };

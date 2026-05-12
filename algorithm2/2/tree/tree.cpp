@@ -1,5 +1,6 @@
 #include <random>
 #include "tree.hpp"
+
 BinaryTree::~BinaryTree() {
     clear();
 }
@@ -27,6 +28,14 @@ bool BinaryTree::isEmpty() const {
         return false;
     return true;
 }
+
+int BinaryTree::height() { return 0; }
+
+int BinaryTree::nodeCount() { return 0; }
+
+int BinaryTree::getMinKey() const { return 0; }
+
+int BinaryTree::getMaxKey() const { return 0; }
 
 BinaryTree::TreeNode* BinaryTree::addNode(const int key)
 {
@@ -69,3 +78,22 @@ BinaryTree::TreeNode* BinaryTree::addNode(const int key)
     }    
 }
 
+bool BinaryTree::removeByKey(int key) { return false; }
+
+bool BinaryTree::isBalance() const { return false; }
+
+int BinaryTree::nodeLevel(TreeNode*) const { return 0; }
+
+void BinaryTree::output() const {}
+
+void BinaryTree::outputByLevel() const {}
+
+BinaryTree& BinaryTree::operator=(const BinaryTree&) {
+    // TODO: insert return statement here
+}
+
+BinaryTree& BinaryTree::operator=(BinaryTree&&) {
+    // TODO: insert return statement here
+}
+
+std::vector<BinaryTree::TreeNode*> BinaryTree::getAllNodes() const { return std::vector<TreeNode*>(); }
