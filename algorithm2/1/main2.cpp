@@ -55,7 +55,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=3){
         }
         elem_prev = elem_cur;
         f_i[file_cur] << " " << elem_cur;
-        std::cout << elem_cur << " ";
+        // std::cout << elem_cur << " ";
     }
     ms[file_cur]--;
     f_i[file_cur] << "#";
@@ -77,9 +77,9 @@ std::string sortFile(const std::string &file_name, const size_t files_count=3){
     }
     char buf;
     int flag_count = 0;
-    std::cout << std::endl;
+    // std::cout << std::endl;
     while (L > 0){
-        std::cout << "L=" << L << ":";
+        // std::cout << "L=" << L << ":";
         while (!f_i[n-2].eof()){
             // определение сливаемых отрезков
             for (size_t i=0; i<files_count; i++){
@@ -109,7 +109,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=3){
                     }
                 }
                 f_i[f_in] << " " << min; 
-                std::cout << " " << min;
+                // std::cout << " " << min;
                 // определение того кончился ли отрезок
                 f_i[min_index].get(buf);
                 if (buf == '#'){
@@ -121,7 +121,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=3){
                 }
             }
             f_i[f_in] << "#";
-            std::cout << "#" << std::endl;
+            // std::cout << "#" << std::endl;
         } 
         L--;
         f_i[n-2].close();
@@ -177,7 +177,7 @@ int createAndSortFile(const std::string &file_name, const int numbersCount, cons
 int main(){
 
     createAndSortFile("./test.txt", 5, 5);
-    return 0;
+    // return 0;
     for(int size=10000; size<=1000000; size*=10)
         for(int d=10; d<=100000; d*=100){
             char file_name[100];
