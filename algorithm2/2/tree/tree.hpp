@@ -5,8 +5,10 @@
 class BinaryTree {  
   public:
     class TreeNode;
+    class IteratorBase;
     class IteratorInBreadth;
     class IteratorLSR;
+    class IteratorSLR;
 
     BinaryTree() = default;
     // BinaryTree(); copy, move
@@ -29,6 +31,10 @@ class BinaryTree {
     std::vector<int> getAllKeys() const;
     void output() const;
     void outputByLevel() const;
+
+    IteratorInBreadth begin();
+    IteratorBase end();
+    
     
 
     BinaryTree &operator=(const BinaryTree &);
@@ -37,7 +43,6 @@ class BinaryTree {
     std::vector<TreeNode*> getAllNodes() const;
 
   private:
-    class IteratorBase;
     TreeNode *root_ = nullptr;
 };
 
@@ -70,17 +75,26 @@ class BinaryTree::IteratorBase {
     // IteratorBase operator++(int);
     TreeNode* operator*();
     const TreeNode* operator*() const;
+    bool isEnd();
   protected:
     TreeNode* node_;
+    bool isEnd_=false;
 
 };
 
 class BinaryTree::IteratorInBreadth : public IteratorBase {  
-  
-  public:
     std::queue<TreeNode*> Queue;
+
+  public:
     IteratorInBreadth(TreeNode *);
     IteratorInBreadth &operator++();
     IteratorInBreadth operator++(int);
-    static IteratorInBreadth getEnd(const TreeNode* root);
 };
+
+// class BinaryTree::IteratorSLR : public IteratorBase {
+//   public:
+//     public:
+//     IteratorSLR(TreeNode *);
+//     IteratorSLR &operator++();
+//     IteratorSLR operator++(int);
+// };

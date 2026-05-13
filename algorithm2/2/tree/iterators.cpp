@@ -2,9 +2,14 @@
 #include "tree.hpp"
 
 BinaryTree::IteratorBase::IteratorBase(TreeNode * node)
-: node_(node) {}
+: node_(node) {
+    if (node_ == nullptr)
+        isEnd_=true;
+}
 
 const BinaryTree::TreeNode* BinaryTree::IteratorBase::operator*() const { return node_; }
+
+bool BinaryTree::IteratorBase::isEnd() { return isEnd_; }
 
 BinaryTree::TreeNode* BinaryTree::IteratorBase::operator*() { return node_; }
 
@@ -25,8 +30,11 @@ BinaryTree::IteratorInBreadth::IteratorInBreadth(TreeNode* node)
 }
 
 BinaryTree::IteratorInBreadth& BinaryTree::IteratorInBreadth::operator++(){
-    if (Queue.empty())
+    if (Queue.empty()){
+        node_ = nullptr;
+        isEnd_ = true;
         return *this;
+    }
     node_ = Queue.front();
     Queue.pop();
     if (node_->getLeftChild())
@@ -36,8 +44,9 @@ BinaryTree::IteratorInBreadth& BinaryTree::IteratorInBreadth::operator++(){
     return *this;
 }
 
-BinaryTree::IteratorInBreadth BinaryTree::IteratorInBreadth::operator++(int) { return *this; }
-
-BinaryTree::IteratorInBreadth BinaryTree::IteratorInBreadth::getEnd(const TreeNode* root){
-    while(root)
+BinaryTree::IteratorInBreadth BinaryTree::IteratorInBreadth::operator++(int) {
+    BinaryTree::IteratorInBreadth copy(*this);
+    this->operator++();
+    return copy;
 }
+
