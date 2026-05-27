@@ -10,9 +10,11 @@
 std::string sortFile(const std::string &file_name, const size_t files_count=5){
     std::ifstream fin(file_name);
     size_t n = files_count+1;
-    int *ms = new int[n], *ip = new int[n];
-    std::fstream *f_i = new std::fstream[n];
+    // int *ms = new int[n], *ip = new int[n];
+    // std::fstream *f_i = new std::fstream[n];
+    std::vector<int> ms(n), ip(n);
     std::vector<std::string> f_names(n);
+    std::vector<std::fstream> f_i(n);
     size_t file_cur=0;
     size_t f_in = files_count;
     int elem_prev, elem_cur;
@@ -66,8 +68,11 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
             f_i[i].open(f_names[i], std::ios_base::in);
     }
     bool have_zero = false;
-    int *elem_curs = new int [files_count]; 
-    bool *flag_curs = new bool [files_count]; 
+    int *elem_curs = new int [n]; 
+    bool *flag_curs = new bool [n]; 
+    // std::vector<int> elem_curs(n);
+    // std::vector<bool> flag_curs(n);
+    
     for (size_t i=0; i<files_count; i++){
         if (!f_i[i].eof())
             f_i[i] >> elem_curs[i];
@@ -147,6 +152,11 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
     std::cout << "результат в " << f_names[0] << std::endl;
     for (size_t i=0; i<files_count; i++)
         f_i[i].close();
+    // delete ms;
+    // delete ip;
+    // delete f_i;
+    delete flag_curs;
+    delete elem_curs;
     return f_names[0];
 
 }
