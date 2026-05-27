@@ -6,8 +6,6 @@
 #include <vector>
 #include <string>
 
-#define out  std::ios_base::openmode::_S_out
-#define in   std::ios_base::openmode::_S_in
 
 std::string sortFile(const std::string &file_name, const size_t files_count=5){
     std::ifstream fin(file_name);
@@ -23,7 +21,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
     for (size_t i=0; i<n; i++){
         ms[i] = 1; ip[i] = 1;
         f_names[i] = "./cache/f_"+ std::to_string(i); 
-        f_i[i].open(f_names[i], out);
+        f_i[i].open(f_names[i], std::ios_base::out);
     }
     ms[n-1] = 0; ip[n-1] = 0;
     while (!fin.eof()){
@@ -34,7 +32,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
     fin.close();
     f_i[f_in].close();
     //разбиение
-    f_i[f_in].open(f_names[f_in], in);
+    f_i[f_in].open(f_names[f_in], std::ios_base::in);
     elem_prev = - (__INT_MAX__-1);
     int L = 1;
     while (!f_i[f_in].eof()){
@@ -63,9 +61,9 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
     for (size_t i=0; i<n; i++){
         f_i[i].close();
         if (i == f_in)
-            f_i[f_in].open(f_names[f_in], out);
+            f_i[f_in].open(f_names[f_in], std::ios_base::out);
         else
-            f_i[i].open(f_names[i], in);
+            f_i[i].open(f_names[i], std::ios_base::in);
     }
     bool have_zero = false;
     int *elem_curs = new int [files_count]; 
@@ -126,9 +124,9 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
         } 
         L--;
         f_i[n-2].close();
-        f_i[n-2].open(f_names[n-2], out);
+        f_i[n-2].open(f_names[n-2], std::ios_base::out);
         f_i[n-1].close();
-        f_i[n-1].open(f_names[n-1], in);
+        f_i[n-1].open(f_names[n-1], std::ios_base::in);
         f_i[n-1] >> elem_curs[n-1];
         for(size_t i=files_count-1; i>0; i--){
             std::swap(f_i[i], f_i[i-1]);
