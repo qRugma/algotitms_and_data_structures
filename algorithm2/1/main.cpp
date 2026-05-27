@@ -9,9 +9,7 @@
 
 std::string sortFile(const std::string &file_name, const size_t files_count=5){
     std::ifstream fin(file_name);
-    size_t n = files_count+1;
-    // int *ms = new int[n], *ip = new int[n];
-    // std::fstream *f_i = new std::fstream[n];
+    size_t n = files_count+1;;
     std::vector<int> ms(n), ip(n);
     std::vector<std::string> f_names(n);
     std::vector<std::fstream> f_i(n);
@@ -24,6 +22,10 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
         ms[i] = 1; ip[i] = 1;
         f_names[i] = "./cache/f_"+ std::to_string(i); 
         f_i[i].open(f_names[i], std::ios_base::out);
+        if (!f_i[i].is_open()){
+            std::cout << "Ошибка открытия файла";
+            return file_name;
+        }
     }
     ms[n-1] = 0; ip[n-1] = 0;
     while (!fin.eof()){
@@ -35,6 +37,10 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
     f_i[f_in].close();
     //разбиение
     f_i[f_in].open(f_names[f_in], std::ios_base::in);
+    if (!f_i[f_in].is_open()){
+        std::cout << "Ошибка открытия файла";
+        return file_name;
+    }
     elem_prev = - (__INT_MAX__-1);
     int L = 1;
     while (!f_i[f_in].eof()){
@@ -66,12 +72,15 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
             f_i[f_in].open(f_names[f_in], std::ios_base::out);
         else
             f_i[i].open(f_names[i], std::ios_base::in);
-    }
+        if (!f_i[i].is_open()){
+            std::cout << "Ошибка открытия файла";
+            return file_name;
+        }
+    
+        }
     bool have_zero = false;
     int *elem_curs = new int [n]; 
     bool *flag_curs = new bool [n]; 
-    // std::vector<int> elem_curs(n);
-    // std::vector<bool> flag_curs(n);
     
     for (size_t i=0; i<files_count; i++){
         if (!f_i[i].eof())
@@ -130,8 +139,16 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
         L--;
         f_i[n-2].close();
         f_i[n-2].open(f_names[n-2], std::ios_base::out);
+        if (!f_i[n-2].is_open()){
+            std::cout << "Ошибка открытия файла";
+            return file_name;
+        }
         f_i[n-1].close();
         f_i[n-1].open(f_names[n-1], std::ios_base::in);
+        if (!f_i[n-1].is_open()){
+            std::cout << "Ошибка открытия файла";
+            return file_name;
+        }
         f_i[n-1] >> elem_curs[n-1];
         for(size_t i=files_count-1; i>0; i--){
             std::swap(f_i[i], f_i[i-1]);
@@ -152,9 +169,6 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
     std::cout << "результат в " << f_names[0] << std::endl;
     for (size_t i=0; i<files_count; i++)
         f_i[i].close();
-    // delete ms;
-    // delete ip;
-    // delete f_i;
     delete flag_curs;
     delete elem_curs;
     return f_names[0];
