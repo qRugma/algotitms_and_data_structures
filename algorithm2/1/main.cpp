@@ -171,11 +171,11 @@ bool isFileContainsSortedArray(const std::string &file_name){
 
     return true;
 }
-int createAndSortFile(const std::string &file_name, const int numbersCount, const int maxNumberValue)
+int createAndSortFile(const std::string &file_name, const int numbersCount, const int maxNumberValue, const int files_count = 5)
 {
     
     std::chrono::high_resolution_clock::time_point timeStart = std::chrono::high_resolution_clock::now();
-    std::string answer_file = sortFile(file_name); //Вызов вашей функции сортировки
+    std::string answer_file = sortFile(file_name, files_count); //Вызов вашей функции сортировки
     std::chrono::high_resolution_clock::time_point timeEnd = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> duration = timeEnd - timeStart;
     std::cout << "time remain: " << duration.count() << std::endl; 
@@ -190,15 +190,16 @@ int createAndSortFile(const std::string &file_name, const int numbersCount, cons
 int main(){
 
     int files_count = 4;
-    
-    // createAndSortFile("./test.txt", 5, 5);
+    std::cout << "input files count: ";
+    std::cin >> files_count;
+    // createAndSortFile("./test.txt", 5, 5, files_count);
     // return 0;
     for(int size=10000; size<=1000000; size*=10)
         for(int d=10; d<=100000; d*=100){
             char file_name[100];
             snprintf(file_name, sizeof(file_name), "../data/S%dD%d.txt", size, d);
             std::cout << "abs_max= " << d << " | size= " << size << std::endl;
-            switch (createAndSortFile(file_name, size, d)) {
+            switch (createAndSortFile(file_name, size, d, files_count)) {
                 case 1:
                     std::cout << "Test passed." << std::endl;
                 break;
