@@ -5,7 +5,9 @@
 class BinaryTree {  
   public:
     class TreeNode;
+    template <typename NodeType>
     class IteratorBase;
+    template <typename NodeType>
     class IteratorInBreadth;
     class IteratorLSR;
     class IteratorSLR;
@@ -32,8 +34,10 @@ class BinaryTree {
     void output() const;
     void outputByLevel() const;
 
-    IteratorInBreadth begin();
-    IteratorBase end();
+    IteratorInBreadth<TreeNode> begin();
+    IteratorBase<TreeNode> end();
+    IteratorInBreadth<const TreeNode> begin() const;
+    IteratorBase<const TreeNode> end() const;
     
     
 
@@ -65,24 +69,26 @@ class  BinaryTree::TreeNode {
     void setRightChild(TreeNode* const);
 };
 
+template<typename NodeType>
 class BinaryTree::IteratorBase {
   public:  
-    IteratorBase(TreeNode *);
+    IteratorBase(NodeType *);
 
-    bool operator!=(const IteratorBase &) const;
-    bool operator==(const IteratorBase &) const;
+    bool operator!=(const IteratorBase<NodeType> &) const;
+    bool operator==(const IteratorBase<NodeType> &) const;
     // IteratorBase &operator++();
     // IteratorBase operator++(int);
-    TreeNode* operator*();
-    const TreeNode* operator*() const;
+    NodeType* operator*();
+    const NodeType* operator*() const;
     bool isEnd();
   protected:
-    TreeNode* node_;
+    NodeType* node_;
     bool isEnd_=false;
 
 };
 
-class BinaryTree::IteratorInBreadth : public IteratorBase {  
+template<typename NodeType>
+class BinaryTree::IteratorInBreadth : public IteratorBase<NodeType> {  
     std::queue<TreeNode*> Queue;
 
   public:
@@ -98,3 +104,31 @@ class BinaryTree::IteratorInBreadth : public IteratorBase {
 //     IteratorSLR &operator++();
 //     IteratorSLR operator++(int);
 // };
+
+
+
+template<typename NodeType>
+BinaryTree::IteratorBase<NodeType>::IteratorBase(NodeType * node)
+: node_(node) {
+    if (node_ == nullptr)
+        isEnd_=true;
+}
+
+template<typename NodeType>
+const NodeType* BinaryTree::IteratorBase<NodeType>::operator*() const { return node_; }
+
+template<typename NodeType>
+bool BinaryTree::IteratorBase<NodeType>::isEnd() { return isEnd_; }
+
+template<typename NodeType>
+NodeType* BinaryTree::IteratorBase<NodeType>::operator*() { return node_; }
+
+template<typename NodeType>
+bool BinaryTree::IteratorBase<NodeType>::operator==(const IteratorBase<NodeType>& other) const {
+    return node_ == *other;
+}
+
+template<typename NodeType>
+bool BinaryTree::IteratorBase<NodeType>::operator!=(const IteratorBase<NodeType>& other) const { 
+    return node_ != *other;
+}

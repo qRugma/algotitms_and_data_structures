@@ -90,7 +90,7 @@ void BinaryTree::outputByLevel() const {}
 
 BinaryTree::IteratorInBreadth BinaryTree::begin() {return IteratorInBreadth(root_); }
 
-BinaryTree::IteratorBase BinaryTree::end() { return IteratorBase(nullptr); }
+BinaryTree::IteratorBase<BinaryTree::TreeNode> BinaryTree::end() { return IteratorBase<TreeNode>(nullptr); }
 
 BinaryTree& BinaryTree::operator=(const BinaryTree&) {
     // TODO: insert return statement here

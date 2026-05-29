@@ -9,7 +9,6 @@ int main(){
     tree.addNode(3);
     tree.addNode(4);
     tree.addNode(5);
-    BinaryTree::IteratorBase iterbase(nullptr);
     for(auto i : tree){
         std::cout << i->getKey() << " ";
     }
