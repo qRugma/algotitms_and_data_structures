@@ -89,10 +89,10 @@ class BinaryTree::IteratorBase {
 
 template<typename NodeType>
 class BinaryTree::IteratorInBreadth : public IteratorBase<NodeType> {  
-    std::queue<TreeNode*> Queue;
+    std::queue<NodeType*> Queue;
 
   public:
-    IteratorInBreadth(TreeNode *);
+    IteratorInBreadth(NodeType *);
     IteratorInBreadth &operator++();
     IteratorInBreadth operator++(int);
 };
@@ -131,4 +131,37 @@ bool BinaryTree::IteratorBase<NodeType>::operator==(const IteratorBase<NodeType>
 template<typename NodeType>
 bool BinaryTree::IteratorBase<NodeType>::operator!=(const IteratorBase<NodeType>& other) const { 
     return node_ != *other;
+}
+
+
+template<typename NodeType>
+BinaryTree::IteratorInBreadth<NodeType>::IteratorInBreadth(NodeType* node)
+: IteratorBase<NodeType>(node) {
+    if (node->getLeftChild())
+        Queue.push(node->getLeftChild());
+    if (node->getRightChild())
+        Queue.push(node->getRightChild());
+}
+
+template<typename NodeType>
+BinaryTree::IteratorInBreadth<NodeType>& BinaryTree::IteratorInBreadth<NodeType>::operator++(){
+    if (Queue.empty()){
+        IteratorBase<NodeType>::node_ = nullptr;
+        IteratorBase<NodeType>::isEnd_ = true;
+        return *this;
+    }
+    IteratorBase<NodeType>::node_ = Queue.front();
+    Queue.pop();
+    if (IteratorBase<NodeType>::node_->getLeftChild())
+        Queue.push(IteratorBase<NodeType>::node_->getLeftChild());
+    if (IteratorBase<NodeType>::node_->getRightChild())
+        Queue.push(IteratorBase<NodeType>::node_->getRightChild());
+    return *this;
+}
+
+template<typename NodeType>
+BinaryTree::IteratorInBreadth<NodeType> BinaryTree::IteratorInBreadth<NodeType>::operator++(int) {
+    BinaryTree::IteratorInBreadth copy(*this);
+    this->operator++();
+    return copy;
 }
