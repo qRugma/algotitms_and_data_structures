@@ -1,6 +1,9 @@
 #include <random>
 #include <iostream>
 #include <algorithm>
+#include <queue>
+#include <math.h>
+#include <string>
 #include <assert.h>
 #include "tree.hpp"
 
@@ -172,15 +175,39 @@ void BinaryTree::output() const {
 }
 
 void BinaryTree::outputByLevel() const {
-    int height_ = height();
-    int margin = std::pow(2, height_) - 1;
-    for(auto node : *this){
-        std::cout << (' ' * margin) << node->getKey();
+    //добавить учет длины чисел
+    int i = 0;
+    int end = std::pow(2, height()) - 1;
+    int margin = std::pow(2, height()-1);
+    int betwen = std::pow(2, height());
+    int next = 2;
+    std::cout << std::string(margin-1, ' ');
+    for (auto node = beginWithSpace(); i < end; i++, node++){
+        if (*node == nullptr){
+            // std::cout << std::string(" ", 1);
+            std::cout << 1;
+        }
+        else {
+            std::cout << (*node)->getKey();
+        }
+        std::cout << std::string(betwen-1, ' ');
+        if (i == (next - 2)){
+            std::cout << std::endl;
+            next *= 2;
+            margin /= 2;
+            betwen /= 2;
+            if (margin > 1)
+                std::cout << std::string(margin-1, ' ');
+        }
     }
 }
-
+//
 BinaryTree::IteratorInBreadth<BinaryTree::TreeNode> BinaryTree::begin() {
     return IteratorInBreadth<TreeNode>(root_);
+}
+
+BinaryTree::IteratorInBreadthAll<BinaryTree::TreeNode> BinaryTree::beginWithSpace() {
+    return IteratorInBreadthAll<TreeNode>(root_); 
 }
 
 BinaryTree::IteratorBase<BinaryTree::TreeNode> BinaryTree::end() {
@@ -189,6 +216,10 @@ BinaryTree::IteratorBase<BinaryTree::TreeNode> BinaryTree::end() {
 
 BinaryTree::IteratorInBreadth<const BinaryTree::TreeNode> BinaryTree::begin() const {
     return IteratorInBreadth<const TreeNode>(root_);
+}
+
+BinaryTree::IteratorInBreadthAll<const BinaryTree::TreeNode> BinaryTree::beginWithSpace() const{
+    return IteratorInBreadthAll<const TreeNode>(root_); 
 }
 
 BinaryTree::IteratorBase<const BinaryTree::TreeNode> BinaryTree::end() const {

@@ -58,3 +58,36 @@ BinaryTree::IteratorInBreadth<NodeType> BinaryTree::IteratorInBreadth<NodeType>:
     this->operator++();
     return copy;
 }
+
+template <typename NodeType>
+BinaryTree::IteratorInBreadthAll<NodeType>::IteratorInBreadthAll(NodeType* node) 
+: IteratorBase<NodeType>(node) {
+    Queue.push(node->getLeftChild());
+    Queue.push(node->getRightChild());
+}
+
+template<typename NodeType>
+BinaryTree::IteratorInBreadthAll<NodeType>& BinaryTree::IteratorInBreadthAll<NodeType>::operator++(){
+    if (Queue.empty()){
+        IteratorBase<NodeType>::node_ = nullptr;
+        IteratorBase<NodeType>::isEnd_ = true;
+        return *this;
+    }
+    IteratorBase<NodeType>::node_ = Queue.front();
+    Queue.pop();
+    if (IteratorBase<NodeType>::node_){
+        Queue.push(IteratorBase<NodeType>::node_->getLeftChild());
+        Queue.push(IteratorBase<NodeType>::node_->getRightChild());
+    } else {
+        Queue.push(nullptr);
+        Queue.push(nullptr);
+    }
+    return *this;
+}
+
+template<typename NodeType>
+BinaryTree::IteratorInBreadthAll<NodeType> BinaryTree::IteratorInBreadthAll<NodeType>::operator++(int) {
+    BinaryTree::IteratorInBreadthAll<NodeType> copy(*this);
+    this->operator++();
+    return copy;
+}

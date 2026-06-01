@@ -9,6 +9,8 @@ class BinaryTree {
     class IteratorBase;
     template <typename NodeType>
     class IteratorInBreadth;
+    template <typename NodeType>
+    class IteratorInBreadthAll;
     class IteratorLSR;
     class IteratorSLR;
 
@@ -39,8 +41,10 @@ class BinaryTree {
     void outputByLevel() const;
 
     IteratorInBreadth<TreeNode> begin();
+    IteratorInBreadthAll<TreeNode> beginWithSpace();
     IteratorBase<TreeNode> end();
     IteratorInBreadth<const TreeNode> begin() const;
+    IteratorInBreadthAll<const TreeNode> beginWithSpace() const;
     IteratorBase<const TreeNode> end() const;
     
     
@@ -103,6 +107,16 @@ class BinaryTree::IteratorInBreadth : public IteratorBase<NodeType> {
     IteratorInBreadth operator++(int);
 };
 
+template<typename NodeType>
+class BinaryTree::IteratorInBreadthAll : public IteratorBase<NodeType> {  
+    std::queue<NodeType*> Queue;
+
+  public:
+    IteratorInBreadthAll(NodeType *);
+    IteratorInBreadthAll &operator++();
+    IteratorInBreadthAll operator++(int);
+};
+
 // class BinaryTree::IteratorSLR : public IteratorBase {
 //   public:
 //     public:
@@ -114,3 +128,4 @@ class BinaryTree::IteratorInBreadth : public IteratorBase<NodeType> {
 
 
 #include "tree.inl"
+

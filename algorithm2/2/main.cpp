@@ -30,4 +30,6 @@ int main(){
     for(auto i : *Ctree){
         std::cout << "key " << i->getKey() << "  level " << Ctree->nodeLevel(i) << std::endl;
     }
+    std::cout << "outputBylevel" << std::endl;
+    tree.outputByLevel();
 }
