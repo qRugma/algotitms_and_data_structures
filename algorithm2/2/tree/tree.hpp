@@ -55,7 +55,7 @@ class BinaryTree {
     BinaryTree &operator=(const BinaryTree &);
     BinaryTree &operator=(BinaryTree &&);
 
-    std::vector<TreeNode*> getAllNodes() const;
+    std::vector<TreeNode*> getAllNodes();
 
   private:
     TreeNode *root_ = nullptr;

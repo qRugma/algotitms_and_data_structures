@@ -6,8 +6,10 @@ int main(){
     BinaryTree tree;
     const BinaryTree *Ctree = &tree;
     std::cout << "nodeCount " << tree.nodeCount() << std::endl;
+    std::cout << "empty " << tree.isEmpty() << std::endl;
     std::cout << "find 5 " << tree.find(5) << std::endl;
     std::cout << "height " << tree.height() << std::endl;
+    std::cout << "isBalance "<< std::boolalpha << tree.isBalance() << std::endl;
     tree.addNode(1);
     tree.addNode(2);
     tree.addNode(3);
@@ -45,4 +47,25 @@ int main(){
     tree = std::move(copytree);
     tree.outputByLevel();
 
+    std::cout << "remove 3" << std::endl;
+    tree.removeByKey(3);
+    tree.outputByLevel();
+    std::cout << "remove 1" << std::endl;
+    tree.removeByKey(1);
+    tree.outputByLevel();
+    std::cout << "remove 5" << std::endl;
+    tree.removeByKey(5);
+    tree.outputByLevel();
+
+    std::cout << "getallnodes" << std::endl;
+
+    for(auto i : tree.getAllNodes())
+        std::cout << i->getKey() << " ";
+    std::cout << std::endl;
+    
+    std::cout << "getallkeys" << std::endl;
+
+    for(auto i : tree.getAllKeys())
+        std::cout << i << " ";
+    std::cout << std::endl;
 }

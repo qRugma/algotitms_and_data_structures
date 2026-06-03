@@ -126,14 +126,60 @@ BinaryTree::TreeNode* BinaryTree::addNode(const int key)
     }    
 }
 
-bool BinaryTree::removeByKey(int key) { 
+bool BinaryTree::removeByKey(int key) {
+    TreeNode* prevNode = root_, *removed_node, *replace_node = nullptr;
+    bool flag = false, root = false;
+
     for(auto node : *this){
         if (node->getKey() == key){
-            destroyNode(node);
-            return true;
+            flag = true;
+            removed_node = node;
+            break;
+        }
+        prevNode = node;
+    }
+    if (!flag)
+        return false;
+    
+    if (root_->getKey() == key)
+        root = true;
+
+    TreeNode *prevReplaceNode = removed_node;
+    
+    if (removed_node->getLeftChild() && removed_node->getRightChild()){
+        replace_node = removed_node->getRightChild();
+        while (replace_node->getLeftChild() || replace_node->getRightChild()){
+            prevReplaceNode = replace_node;
+            if (replace_node->getLeftChild())
+                replace_node = replace_node->getLeftChild();
+            else 
+                replace_node = replace_node->getRightChild();
         }
     }
-    return false;
+    else if (removed_node->getRightChild()){
+        replace_node = removed_node->getRightChild();
+    }
+    else if (removed_node->getLeftChild())
+        replace_node = removed_node->getLeftChild();
+
+    if (prevReplaceNode->getLeftChild() == replace_node)
+        prevReplaceNode->setLeftChild(nullptr);
+    else if (prevReplaceNode->getRightChild() == replace_node)
+        prevReplaceNode->setRightChild(nullptr);
+
+    replace_node->setRightChild(removed_node->getRightChild());
+    replace_node->setLeftChild(removed_node->getLeftChild());
+
+    if (root)
+        root_ = replace_node;
+    else 
+        if (removed_node == prevNode->getLeftChild())
+            prevNode->setLeftChild(replace_node);
+        else
+            prevNode->setRightChild(replace_node);
+
+    delete removed_node;
+    return true;
 }
 
 BinaryTree::TreeNode* BinaryTree::find(int key) {
@@ -179,6 +225,13 @@ int BinaryTree::nodeLevel(const TreeNode* node, const TreeNode* root, int level)
     );
 }
 
+std::vector<int> BinaryTree::getAllKeys() const {
+    std::vector<int> keys;
+    for(auto i : *this)
+        keys.push_back(i->getKey());
+    return keys;
+ }
+
 void BinaryTree::output() const {
     if (root_ == nullptr) 
         return;
@@ -199,7 +252,7 @@ void BinaryTree::outputByLevel() const {
     for (auto node = beginWithSpace(); i < end; i++, node++){
         if (*node == nullptr){
             // std::cout << std::string(" ", 1);
-            std::cout << 1;
+            std::cout << " ";
         }
         else {
             std::cout << (*node)->getKey();
@@ -252,7 +305,12 @@ BinaryTree& BinaryTree::operator=(BinaryTree&& other) {
     return *this;
 }
 
-std::vector<BinaryTree::TreeNode*> BinaryTree::getAllNodes() const { return std::vector<TreeNode*>(); }
+std::vector<BinaryTree::TreeNode*> BinaryTree::getAllNodes() { 
+    std::vector<TreeNode*> result;
+    for (auto i : *this)
+        result.push_back(i);
+    return result;
+}
 
 BinaryTree::TreeNode* BinaryTree::copySubTree(const TreeNode* node) {
     if (node == nullptr)
