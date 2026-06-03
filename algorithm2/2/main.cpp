@@ -32,4 +32,17 @@ int main(){
     }
     std::cout << "outputBylevel" << std::endl;
     tree.outputByLevel();
+    std::cout << "========== copy:" << std::endl;
+    BinaryTree copytree = tree;
+    copytree.outputByLevel();
+    std::cout << "copy operator=" << std::endl;
+    tree.clear();
+    tree = copytree;
+    tree.outputByLevel();
+    
+    std::cout << "move operator=" << std::endl;
+    tree.clear();
+    tree = std::move(copytree);
+    tree.outputByLevel();
+
 }

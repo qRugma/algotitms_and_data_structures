@@ -15,11 +15,14 @@ class BinaryTree {
     class IteratorSLR;
 
     BinaryTree() = default;
+    BinaryTree(std::vector<int>);
+    BinaryTree(BinaryTree&);
+    BinaryTree(BinaryTree&&);
     // BinaryTree(); copy, move
     ~BinaryTree();
 
 
-    TreeNode* getRoot() const;
+    TreeNode* getRoot();
     void clear();
     void destroyNode(TreeNode*);
     bool isEmpty() const;
@@ -56,7 +59,7 @@ class BinaryTree {
 
   private:
     TreeNode *root_ = nullptr;
-
+    TreeNode* copySubTree(const TreeNode*);
     void printHorizontal(TreeNode *, int marginLeft=2, int levelSpacing=1) const;
 };
 

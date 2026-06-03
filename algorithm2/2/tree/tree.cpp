@@ -7,11 +7,25 @@
 #include <assert.h>
 #include "tree.hpp"
 
+BinaryTree::BinaryTree(std::vector<int> data){
+    for(auto i : data)
+        addNode(i);
+}
+
+BinaryTree::BinaryTree(BinaryTree& other){
+    root_ = copySubTree(other.root_);
+}
+
+BinaryTree::BinaryTree(BinaryTree&& other){
+    root_ = other.root_;
+    other.root_ = nullptr;
+}
+
 BinaryTree::~BinaryTree() {
     clear();
 }
 
-BinaryTree::TreeNode* BinaryTree::getRoot() const {
+BinaryTree::TreeNode* BinaryTree::getRoot() {
     return root_;
 }
 
@@ -226,8 +240,9 @@ BinaryTree::IteratorBase<const BinaryTree::TreeNode> BinaryTree::end() const {
     return IteratorBase<const TreeNode>(nullptr);
 }
 
-BinaryTree& BinaryTree::operator=(const BinaryTree&) {
-    // TODO: insert return statement here
+BinaryTree& BinaryTree::operator=(const BinaryTree& other) {
+    clear();
+    root_ = copySubTree(other.root_);
     return *this;
 }
 
@@ -239,7 +254,19 @@ BinaryTree& BinaryTree::operator=(BinaryTree&& other) {
 
 std::vector<BinaryTree::TreeNode*> BinaryTree::getAllNodes() const { return std::vector<TreeNode*>(); }
 
-void BinaryTree::printHorizontal(TreeNode* root, int marginLeft, int levelSpacing) const{
+BinaryTree::TreeNode* BinaryTree::copySubTree(const TreeNode* node) {
+    if (node == nullptr)
+        return nullptr;
+    TreeNode *node_new = new TreeNode(node->getKey());
+    if (node->getLeftChild())
+        node_new->setLeftChild(copySubTree(node->getLeftChild()));
+    if (node->getRightChild())
+        node_new->setRightChild(copySubTree(node->getRightChild()));
+    return node_new;
+    
+}
+
+void BinaryTree::printHorizontal(TreeNode* root, int marginLeft, int levelSpacing) const {
     if (root == nullptr) 
         return;
     printHorizontal(root->getRightChild(), marginLeft + levelSpacing, levelSpacing);
