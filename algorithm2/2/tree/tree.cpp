@@ -199,13 +199,30 @@ BinaryTree::TreeNode const* BinaryTree::find(int key) const{
 bool BinaryTree::isBalance() const { 
     if (root_ == nullptr)
         return true;
-    return isBalance(root_->getLeftChild()) && isBalance(root_->getRightChild());
+    int h_left = isBalance(root_->getLeftChild());
+    int h_right = isBalance(root_->getRightChild());
+    if (h_left == -1 || h_right == -1)
+        return false;
+    if (std::abs(h_left - h_right) <= 1)
+        return true;
+    return false;
 }
 
-bool BinaryTree::isBalance(const TreeNode* node) const { 
+//дописать
+int BinaryTree::isBalance(const TreeNode* node) const { 
     if (node == nullptr)
-        return true;
-    return isBalance(node->getLeftChild()) && isBalance(node->getRightChild());
+        return 0;
+    int h_left=0, h_right=0;
+    if (node->getLeftChild())
+        h_left = isBalance(node->getLeftChild());
+    if (node->getRightChild())
+        h_right = isBalance(node->getRightChild());
+
+    if (h_left == -1 || h_right == -1)
+        return -1;
+    if (std::abs(h_left - h_right) <= 1)
+        return 1 + std::max(h_left, h_right);
+    return -1;
 }
 
 int BinaryTree::nodeLevel(const TreeNode* node) const {
@@ -225,10 +242,12 @@ int BinaryTree::nodeLevel(const TreeNode* node, const TreeNode* root, int level)
     );
 }
 
+//add sort
 std::vector<int> BinaryTree::getAllKeys() const {
     std::vector<int> keys;
     for(auto i : *this)
         keys.push_back(i->getKey());
+    std::sort(keys.begin(), keys.end());
     return keys;
  }
 

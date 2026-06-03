@@ -36,7 +36,7 @@ class BinaryTree {
     TreeNode* find(int key);
     TreeNode const* find(int key) const;
     bool isBalance() const;
-    bool isBalance(const TreeNode*) const;
+    int isBalance(const TreeNode*) const;
     int nodeLevel(const TreeNode*) const;
     int nodeLevel(const TreeNode*, const TreeNode*, int level=0) const;
     std::vector<int> getAllKeys() const;

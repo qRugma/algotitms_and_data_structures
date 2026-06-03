@@ -15,6 +15,7 @@ int main(){
     tree.addNode(3);
     std::cout << "isbalance " << tree.isBalance() << std::endl;
     tree.addNode(4);
+    std::cout << "isbalance " << tree.isBalance() << std::endl;
     tree.addNode(5);
     std::cout << "nodeCount " << tree.nodeCount() << std::endl;
     std::cout << "iterator: " << std::endl;
@@ -22,6 +23,13 @@ int main(){
         std::cout << i->getKey() << " ";
     }
     std::cout << std::endl;
+    
+    std::cout << "getallkeys" << std::endl;
+
+    for(auto i : tree.getAllKeys())
+        std::cout << i << " ";
+    std::cout << std::endl;
+
     std::cout << "output: " << std::endl;
     tree.output();
     std::cout << "find 5 " << tree.find(5) << std::endl;
@@ -63,9 +71,4 @@ int main(){
         std::cout << i->getKey() << " ";
     std::cout << std::endl;
     
-    std::cout << "getallkeys" << std::endl;
-
-    for(auto i : tree.getAllKeys())
-        std::cout << i << " ";
-    std::cout << std::endl;
 }
