@@ -1,3 +1,5 @@
+#include <limits.h>
+
 #include <iostream>
 #include <cmath>
 #include <fstream>
@@ -41,7 +43,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
         std::cout << "Ошибка открытия файла";
         return file_name;
     }
-    elem_prev = - (__INT_MAX__-1);
+    elem_prev = INT_MIN;
     int L = 1;
     while (!f_i[f_in].eof()){
         f_i[f_in] >> elem_cur;
@@ -111,7 +113,7 @@ std::string sortFile(const std::string &file_name, const size_t files_count=5){
             // слияние отрезков в f_in
             while (flag_count >0){
                 // поиск сливаемого элемента
-                int min = __INT_MAX__, min_index; 
+                int min = INT_MAX, min_index; 
                 for (size_t j=0; j<files_count; j++){
                     if (!flag_curs[j])
                         continue;

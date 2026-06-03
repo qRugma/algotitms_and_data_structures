@@ -50,6 +50,7 @@ testing
 
 # data files
 *.txt
+!*CMakeLists.txt
 
 # project 7
 oop/7/*

@@ -1,3 +1,11 @@
+namespace std 
+{
+    template < typename > struct initializer_list ;
+    template < typename, typename > struct vector ;
+    struct ostream;
+    struct istream;
+}
+
 class Vector {
     size_t size_ = 0;
     size_t capacity_ = 8;
